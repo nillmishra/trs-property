@@ -30,3 +30,4 @@ const CitiesCard = ({ cities }) => {
 };
 
 export default CitiesCard;
+
