@@ -26,7 +26,7 @@ function AnimatedCounter({ target }) {
         };
     }, [count, target, rounded]);
 
-    return <span className="flex items-center font-bold">{displayValue}<Plus className="w-5 h-5 md:w-6 md:h-6 text-white" /></span>;
+    return <span className="flex items-center font-bold">{displayValue}<Plus className="w-5 h-5 md:w-6 md:h-6" /></span>;
 }
 
 // Staggered text animation component
@@ -146,7 +146,7 @@ function HeroSection() {
     };
 
     return (
-        <section className="relative min-h-screen overflow-hidden">
+        <section className="relative h-[88vh] overflow-hidden">
             {/* Video Background */}
             <div className="absolute inset-0 z-0">
                 <video
@@ -188,7 +188,7 @@ function HeroSection() {
                 ))}
             </div>
 
-            <div className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center items-center py-12">
+            <div className="relative z-10 container mx-auto px-4 h-[90vh] flex flex-col justify-center items-center">
                 <motion.div
                     ref={ref}
                     initial="hidden"
@@ -198,22 +198,17 @@ function HeroSection() {
                 >
 
                     {/* Animated Title */}
-                    <motion.div 
-                        key={activeFilter} 
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    >
+                    <motion.div key={activeFilter} variants={fadeInUp}>
                         <AnimatedText 
                             text={getHeadingText()}
-                            className="hero-title text-3xl md:text-5xl lg:text-6xl font-semibold mb-6 leading-tight tracking-tight"
+                            className="hero-title text-3xl md:text-5xl lg:text-6xl font-semibold mb-4 leading-tight tracking-tight"
                         />
                     </motion.div>
 
                     {/* Subtitle */}
                     <motion.p 
                         variants={fadeInUp}
-                        className="md:text-lg text-base mb-10 max-w-2xl mx-auto text-white/80 leading-relaxed"
+                        className="md:text-xl font-semibold mb-10 max-w-2xl mx-auto text-white/80 leading-tight"
                     >
                         We provide a complete service for the sale, purchase or rental of real estate.
                         Get access to exclusive network & properties that suit your needs.
@@ -222,7 +217,7 @@ function HeroSection() {
                     {/* Stats Section */}
                     <motion.div 
                         variants={fadeInUp}
-                        className="flex flex-wrap gap-6 md:gap-12 mt-8 justify-center mb-14"
+                        className="flex flex-wrap gap-6 md:gap-12 mt-4 justify-center mb-5"
                     >
                         {[
                             { target: 3000, label: "PROPERTIES" },

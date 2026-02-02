@@ -1,6 +1,7 @@
 import Header from "@/components/header"
 import HeroSection from "@/components/home/hero-section"
 import FounderSection from "@/components/home/founder-section"
+import FounderAwardSection from "@/components/home/founder-award-section"
 import AiRevolutionSection from "@/components/home/ai-revolution-section"
 import DeveloperBanner from "@/components/home/developer-banner"
 import PatnerSection from "@/components/home/patner-section"
@@ -11,6 +12,7 @@ import Footer from "@/components/footer"
 import FeaturedProjects from "@/components/home/featured-projects"
 import ServicesToolsSection from "@/components/home/services-tools-section"
 import FAQSection from "@/components/home/faq-section"
+import BlogSection from "@/components/home/BlogSection"
 
 export default function Home() {
 
@@ -213,13 +215,15 @@ export default function Home() {
         <main className="flex-grow">
           <HeroSection />
           <FeaturedProjects />
-          {/* <FounderSection /> */}
-          {/* <AiRevolutionSection features={features} /> */}
+          <FounderSection />
+          <FounderAwardSection />
+          <AiRevolutionSection features={features} />
           {/* <DeveloperBanner /> */}
           <PatnerSection imagesPatner={imagesPatner} />
-          {/* <ServicesToolsSection services={services} /> */}
+          <ServicesToolsSection />
           <Testimonials testimonials={testimonials} />
-          <FAQSection faqs={faqs} />
+          <BlogSection />
+          {/* <FAQSection faqs={faqs} /> */}
           <NewsLetter />
         </main>
         {/* <WhatsapBanner /> */}
