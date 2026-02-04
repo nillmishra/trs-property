@@ -108,7 +108,7 @@ function PatnerSection() {
                                     alt={logo.name}
                                     width={80}
                                     height={80}
-                                    className="w-16 h-16 md:w-20 md:h-20 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 filter grayscale group-hover:grayscale-0"
+                                    className="w-16 h-16 md:w-20 md:h-20 object-contain transition-transform duration-300 group-hover:scale-110"
                                 />
                             </div>
                         </motion.div>
@@ -142,7 +142,7 @@ function PatnerSection() {
                                     alt={logo.name}
                                     width={80}
                                     height={80}
-                                    className="w-16 h-16 md:w-20 md:h-20 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 filter grayscale group-hover:grayscale-0"
+                                    className="w-16 h-16 md:w-20 md:h-20 object-contain transition-transform duration-300 group-hover:scale-110"
                                 />
                             </div>
                         </motion.div>

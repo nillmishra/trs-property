@@ -52,14 +52,17 @@ function Header() {
                             <Link
                                 key={href}
                                 href={href}
-                                className={`flex items-center gap-1.5 text-white text-sm font-medium transition-all duration-300 ${
+                                className={`relative flex items-center gap-1.5 text-white text-sm font-bold transition-all duration-300 group ${
                                     pathname === href
-                                        ? 'text-amber-400 opacity-100'
+                                        ? 'text-yellow-400 opacity-100'
                                         : 'opacity-90 hover:opacity-100 hover:text-amber-300'
                                 }`}
                             >
                                 <Icon className="w-4 h-4" />
                                 {label}
+                                <span className={`absolute -bottom-1 left-0 h-0.5 bg-yellow-400 transition-all duration-300 ${
+                                    pathname === href ? 'w-full' : 'w-0 group-hover:w-full'
+                                }`}></span>
                             </Link>
                         ))}
 
