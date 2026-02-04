@@ -134,14 +134,6 @@ export default function Home() {
     },
   ]
 
-  const imagesPatner = [
-    "/assets/images/text1.png",
-    "/assets/images/text2.png",
-    "/assets/images/text3.png",
-    "/assets/images/text4.png",
-    "/assets/images/text5.png",
-  ]
-
   const services = [
     {
       img: "/assets/images/service/service-one.avif",
@@ -219,7 +211,7 @@ export default function Home() {
           <FounderAwardSection />
           <AiRevolutionSection features={features} />
           {/* <DeveloperBanner /> */}
-          <PatnerSection imagesPatner={imagesPatner} />
+          <PatnerSection />
           <ServicesToolsSection />
           <Testimonials testimonials={testimonials} />
           <BlogSection />
