@@ -1,12 +1,56 @@
 "use client"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Sparkles } from "lucide-react"
 import { lufga } from '@/fonts';
 
-function PatnerSection({ imagesPatner }) {
+// Builder Logo Images
+import AdaniRealty from "../../../public/assets/images/builderLogo/adani.png";
+import AdityaBirla from "../../../public/assets/images/builderLogo/aditya.jpeg";
+import Azizi from "../../../public/assets/images/builderLogo/AZIZI.png";
+import BhartiyaCity from "../../../public/assets/images/builderLogo/BHARTIYA CITY.png";
+import Bhutani from "../../../public/assets/images/builderLogo/BHUTANI.png";
+import Damac from "../../../public/assets/images/builderLogo/DAMAC.png";
+import Dlf from "../../../public/assets/images/builderLogo/DLF.png";
+import GodrejProperties from "../../../public/assets/images/builderLogo/GODREJ PROPERTIES.png";
+import HarshitaSmart from "../../../public/assets/images/builderLogo/HARSHITA SMART.png";
+import HdfcLife from "../../../public/assets/images/builderLogo/HDFC LIFE.png";
+import HighwayInfrastructure from "../../../public/assets/images/builderLogo/HIGHWAY INFRASTRUCTURE.png";
+import Kalpataru from "../../../public/assets/images/builderLogo/KALPATARU.png";
+import LTRealty from "../../../public/assets/images/builderLogo/L T REALTY.jpeg";
+import MahindraLifespace from "../../../public/assets/images/builderLogo/MAHINDRA LIFESPACE.png";
+import OberaiReality from "../../../public/assets/images/builderLogo/OBERAI REALITY.jpeg";
+import Omaxe from "../../../public/assets/images/builderLogo/OMAXE.png";
+import RaymondReality from "../../../public/assets/images/builderLogo/RAYMOND REALITY.png";
+import Rustomjee from "../../../public/assets/images/builderLogo/RUSTOMJEE.jpeg";
+import SkyeEarth from "../../../public/assets/images/builderLogo/SKYE EARTH.png";
+import SobhaRealty from "../../../public/assets/images/builderLogo/SOBHA REALTY.png";
+
+const builderLogos = [
+    { src: AdaniRealty, name: "Adani Realty" },
+    { src: AdityaBirla, name: "Aditya Birla" },
+    { src: Azizi, name: "Azizi" },
+    { src: BhartiyaCity, name: "Bhartiya City" },
+    { src: Bhutani, name: "Bhutani" },
+    { src: Damac, name: "Damac" },
+    { src: Dlf, name: "DLF" },
+    { src: GodrejProperties, name: "Godrej Properties" },
+    { src: HarshitaSmart, name: "Harshita Smart" },
+    { src: HdfcLife, name: "HDFC Life" },
+    { src: HighwayInfrastructure, name: "Highway Infrastructure" },
+    { src: Kalpataru, name: "Kalpataru" },
+    { src: LTRealty, name: "L&T Realty" },
+    { src: MahindraLifespace, name: "Mahindra Lifespace" },
+    { src: OberaiReality, name: "Oberai Reality" },
+    { src: Omaxe, name: "Omaxe" },
+    { src: RaymondReality, name: "Raymond Reality" },
+    { src: Rustomjee, name: "Rustomjee" },
+    { src: SkyeEarth, name: "Skye Earth" },
+    { src: SobhaRealty, name: "Sobha Realty" },
+];
+
+function PatnerSection() {
     // Double the images for seamless loop
-    const duplicatedImages = [...imagesPatner, ...imagesPatner, ...imagesPatner, ...imagesPatner];
+    const duplicatedImages = [...builderLogos, ...builderLogos, ...builderLogos, ...builderLogos];
 
     return (
         <section className="py-20 md:py-28 bg-gradient-to-br from-[#171137] via-[#121212] to-[#171137] overflow-hidden relative">
@@ -41,7 +85,7 @@ function PatnerSection({ imagesPatner }) {
                 <motion.div
                     className="flex gap-8 md:gap-12 py-8"
                     animate={{
-                        x: [0, -50 * imagesPatner.length * 4],
+                        x: [0, -50 * builderLogos.length * 4],
                     }}
                     transition={{
                         x: {
@@ -51,7 +95,7 @@ function PatnerSection({ imagesPatner }) {
                         },
                     }}
                 >
-                    {duplicatedImages.map((img, index) => (
+                    {duplicatedImages.map((logo, index) => (
                         <motion.div
                             key={index}
                             whileHover={{ scale: 1.1 }}
@@ -60,11 +104,11 @@ function PatnerSection({ imagesPatner }) {
                         >
                             <div className="relative w-28 h-28 md:w-36 md:h-36 bg-[#F3EFE7]/5 backdrop-blur-sm border border-[#F3EFE7]/10 rounded-2xl flex items-center justify-center p-4 transition-all duration-300 group-hover:bg-[#F3EFE7]/10 group-hover:border-[#C6A256]/30 group-hover:shadow-lg group-hover:shadow-[#C6A256]/10">
                                 <Image
-                                    src={img}
-                                    alt={`Partner ${index + 1}`}
+                                    src={logo.src}
+                                    alt={logo.name}
                                     width={80}
                                     height={80}
-                                    className="w-16 h-16 md:w-20 md:h-20 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 filter grayscale group-hover:grayscale-0"
+                                    className="w-16 h-16 md:w-20 md:h-20 object-contain transition-transform duration-300 group-hover:scale-110"
                                 />
                             </div>
                         </motion.div>
@@ -75,7 +119,7 @@ function PatnerSection({ imagesPatner }) {
                 <motion.div
                     className="flex gap-8 md:gap-12 py-8"
                     animate={{
-                        x: [-50 * imagesPatner.length * 4, 0],
+                        x: [-50 * builderLogos.length * 4, 0],
                     }}
                     transition={{
                         x: {
@@ -85,7 +129,7 @@ function PatnerSection({ imagesPatner }) {
                         },
                     }}
                 >
-                    {duplicatedImages.map((img, index) => (
+                    {duplicatedImages.map((logo, index) => (
                         <motion.div
                             key={`row2-${index}`}
                             whileHover={{ scale: 1.1 }}
@@ -94,11 +138,11 @@ function PatnerSection({ imagesPatner }) {
                         >
                             <div className="relative w-28 h-28 md:w-36 md:h-36 bg-[#F3EFE7]/5 backdrop-blur-sm border border-[#F3EFE7]/10 rounded-2xl flex items-center justify-center p-4 transition-all duration-300 group-hover:bg-[#F3EFE7]/10 group-hover:border-[#C6A256]/30 group-hover:shadow-lg group-hover:shadow-[#C6A256]/10">
                                 <Image
-                                    src={img}
-                                    alt={`Partner ${index + 1}`}
+                                    src={logo.src}
+                                    alt={logo.name}
                                     width={80}
                                     height={80}
-                                    className="w-16 h-16 md:w-20 md:h-20 object-contain opacity-60 group-hover:opacity-100 transition-all duration-300 filter grayscale group-hover:grayscale-0"
+                                    className="w-16 h-16 md:w-20 md:h-20 object-contain transition-transform duration-300 group-hover:scale-110"
                                 />
                             </div>
                         </motion.div>
