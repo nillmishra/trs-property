@@ -66,7 +66,7 @@ const propertyApi = realStateAPI.injectEndpoints({
         deleteProperty: build.mutation({
             query: (id) => ({
                 url: `property/customer_delete/${id}`,
-                method: "DELETE",
+                method: "DELETE", 
             }),
             invalidatesTags: ['getCustomerProperty']
         }),

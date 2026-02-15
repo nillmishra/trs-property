@@ -67,7 +67,7 @@ function VerifyOtpForm({ onClose, sendOtpInfo }) {
                 dispatch(setToken(response?.user?.access_token));
                 dispatch(setUser(response?.user));
                 toast.success(response?.message);
-                router.push("/property");
+                window.dispatchEvent(new Event("resume-form-submit"));
                 onClose();
             }
         } catch (err) {
