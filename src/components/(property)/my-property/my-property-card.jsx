@@ -52,7 +52,7 @@ const MyPropertyCard = () => {
             </div>
             <div className="container mx-auto md:px-10 px-5">
                 <div className="flex justify-between my-8 items-center">
-                    <h1 className='md:text-3xl text-lg font-bold'>Your Properties on RX100</h1>
+                    <h1 className='md:text-3xl text-lg font-bold'>Your Properties on TRS</h1>
                     <div className='flex items-center gap-2'>
                         <Link
                             href={"/my-property"}

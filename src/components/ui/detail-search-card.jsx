@@ -94,7 +94,7 @@ function DetailSearchCard({ property, action = false }) {
                         {property?.title?.split(' ')?.slice(0, 4)?.join(' ')}
                     </h3>
                     <p className="md:text-lg font-bold text-gray-900 text-nowrap">
-                        ₹ {property?.price} <span className="text-sm text-gray-500"></span>
+                        ₹ {property?.price ?? property?.expected_price} <span className="text-sm text-gray-500">Cr.</span>
                     </p>
                 </div>
 
@@ -164,7 +164,7 @@ function DetailSearchCard({ property, action = false }) {
                             <div className="w-7 h-7 bg-amber-50 rounded-lg flex items-center justify-center">
                                 <Square className="h-3.5 w-3.5 text-amber-600" />
                             </div>
-                            <span className="text-gray-700 font-medium">{property?.superArea || "—"} sqft</span>
+                            <span className="text-gray-700 font-medium">{(property?.superArea ?? property?.super_area) || "—"} sqft</span>
                         </div>
                     </div>
                 </div>

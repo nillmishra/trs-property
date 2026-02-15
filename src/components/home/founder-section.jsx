@@ -164,7 +164,7 @@ function FounderSection() {
                             transition={{ duration: 0.6, delay: 0.5 }}
                             className="text-white/70 text-base md:text-lg mb-6 leading-relaxed"
                         >
-                            Managing Director of RX100 Realtech Private Limited Pvt Ltd | Founder of WORLDCITY INFRATECH | Promoter of various Realty Sector Initiatives since 1992
+                            Managing Director of TRS Realtech Private Limited Pvt Ltd | Founder of WORLDCITY INFRATECH | Promoter of various Realty Sector Initiatives since 1992
                         </motion.p>
 
                         <motion.div

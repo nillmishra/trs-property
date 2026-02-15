@@ -8,7 +8,7 @@ const CitiesCard = ({ cities }) => {
     return (
         <div className="container mx-auto md:mb-20 mb-10 md:px-10 px-5">
             <div className="flex justify-center my-8">
-                <h1 className='md:text-4xl text-xl font-bold'>RX100 IS NOW PRESENT IN ALL MAJOR CITIES ACROSS INDIA </h1>
+                <h1 className='md:text-4xl text-xl font-bold'>TRS IS NOW PRESENT IN ALL MAJOR CITIES ACROSS INDIA </h1>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {cities?.map((card, index) => (
