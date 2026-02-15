@@ -49,7 +49,7 @@ const PropertyFavouriteCard = () => {
             </div>
             <div className="container mx-auto md:px-10 px-5">
                 <div className="flex justify-between my-8 items-center">
-                    <h1 className='md:text-3xl text-lg font-bold'>Your Favorites on RX100</h1>
+                    <h1 className='md:text-3xl text-lg font-bold'>Your Favorites TRS</h1>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {isLoading ? (

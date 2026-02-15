@@ -229,7 +229,7 @@ const PropertyCard = ({ cards }) => {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                     <div>
-                        <h1 className='text-2xl md:text-3xl font-bold text-white'>All Properties on RX100</h1>
+                        <h1 className='text-2xl md:text-3xl font-bold text-white'>All Properties on TRS</h1>
                         <p className='text-white/60 mt-2'>
                             {isLoading ? (
                                 <span className="inline-block w-32 h-4 bg-white/10 animate-pulse rounded"></span>
