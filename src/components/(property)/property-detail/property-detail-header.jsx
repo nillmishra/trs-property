@@ -12,7 +12,7 @@ function PropertyDetailHeader({ property }) {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
                 <div>
                     <h1 className="text-2xl md:text-4xl font-bold">{property?.title}</h1>
-                    <p className="text-xl font-medium mt-2">{property?.location}</p>
+                    <p className="text-xl font-medium mt-2">{property?.location || property?.city}</p>
                 </div>
                 <div className="flex items-center mt-2 md:mt-0 space-x-4">
                     <button

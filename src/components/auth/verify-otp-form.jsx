@@ -1,12 +1,12 @@
 import { setToken, setUser } from "@/redux/authSlice";
-import { useVerifyOtpMutation } from "@/service/authApi";
+import { useLoginVerifyOtpMutation } from "@/service/authApi";
 import { Loader, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 
-function OtpInput({ length = 4, onChange }) {
+function OtpInput({ length = 6, onChange }) {
     const [otp, setOtp] = useState(Array(length).fill(""));
     const inputsRef = useRef([]);
 
@@ -53,7 +53,7 @@ function VerifyOtpForm({ onClose, sendOtpInfo }) {
     const dispatch = useDispatch();
     const router = useRouter();
     const [otpValue, setOtpValue] = useState("");
-    const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+    const [verifyOtp, { isLoading }] = useLoginVerifyOtpMutation();
 
     const handleOtpChange = (value) => {
         setOtpValue(value);
@@ -62,11 +62,15 @@ function VerifyOtpForm({ onClose, sendOtpInfo }) {
     const handlerVerifyOtp = async () => {
         if (!otpValue) return toast.error("please fill the otp input");
         try {
-            const response = await verifyOtp({ otp: otpValue, phone: sendOtpInfo?.phone, role: sendOtpInfo?.role }).unwrap();
-            if (response?.status) {
-                dispatch(setToken(response?.user?.access_token));
-                dispatch(setUser(response?.user));
-                toast.success(response?.message);
+            const response = await verifyOtp({ otp: otpValue, phone: sendOtpInfo?.phone }).unwrap();
+            if (response?.success || response?.token) {
+                // New API returns token directly in response
+                const token = response?.token || response?.data?.token;
+                const user = response?.user || response?.data?.user || { phone: sendOtpInfo?.phone, role: sendOtpInfo?.role };
+                
+                dispatch(setToken(token));
+                dispatch(setUser(user));
+                toast.success(response?.message || "Login successful");
                 window.dispatchEvent(new Event("resume-form-submit"));
                 onClose();
             }

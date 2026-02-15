@@ -1,5 +1,5 @@
 "use client";
-import { useGetSinglePropertyQuery } from "@/service/propertyApi"
+import { useGetPropertyByIdQuery } from "@/service/propertyApi"
 import Footer from "../../footer"
 import Header from "../../header"
 import WhatsapBanner from "../../home/whatsap-banner"
@@ -11,8 +11,28 @@ import PropertyDetailSimilarProperties from "./property-detail-similar-propertie
 import { useGetRequestStatusPropertyQuery } from "@/service/tourApi";
 
 function PropertyMainDark({ id }) {
-    const { data, isLoading } = useGetSinglePropertyQuery(id);
-    const { data: requestStatus } = useGetRequestStatusPropertyQuery(id);
+    const { data, isLoading } = useGetPropertyByIdQuery(id);
+    const apiProperty = data?.data?.property;
+    const normalizedProperty = apiProperty
+        ? {
+            ...apiProperty,
+            id: apiProperty?._id ?? apiProperty?.id,
+            expected_price: apiProperty?.price ?? apiProperty?.expected_price,
+            property_type: apiProperty?.propertyType ?? apiProperty?.property_type,
+            project_name: apiProperty?.projectName ?? apiProperty?.project_name,
+            possession_status: apiProperty?.possessionStatus ?? apiProperty?.possession_status,
+            booking_amount: apiProperty?.bookingAmount ?? apiProperty?.booking_amount,
+            super_area: apiProperty?.superArea ?? apiProperty?.super_area,
+            carpet_area: apiProperty?.carpetArea ?? apiProperty?.carpet_area,
+            rera_id: apiProperty?.reraId ?? apiProperty?.rera_id,
+            builder_name: apiProperty?.builderName ?? apiProperty?.builder_name,
+            nearby_landmarks: apiProperty?.landmarks ?? apiProperty?.nearby_landmarks,
+            location: apiProperty?.location ?? apiProperty?.city,
+            city: apiProperty?.city ?? apiProperty?.location,
+        }
+        : undefined;
+    const propertyId = normalizedProperty?.id || id;
+    const { data: requestStatus } = useGetRequestStatusPropertyQuery(propertyId);
 
     const propertyFeatures = [
         "3 Bedrooms",
@@ -82,9 +102,9 @@ function PropertyMainDark({ id }) {
             <Header />
             <div className={`flex flex-col min-h-screen text-white`}>
                 <main className={`flex-grow property-search-gradient`}>
-                    <PropertyDetailHeader property={data?.data[0]} isDark={true} />
-                    <PropertyDetailImages property={data?.data[0]} />
-                    <PropertyPropertyDetail property={data?.data[0]} propertyFeatures={propertyFeatures} facilities={facilities} requestStatus={requestStatus?.requested} />
+                    <PropertyDetailHeader property={normalizedProperty} isDark={true} />
+                    <PropertyDetailImages property={normalizedProperty} />
+                    <PropertyPropertyDetail property={normalizedProperty} propertyFeatures={propertyFeatures} facilities={facilities} requestStatus={requestStatus?.requested} />
                     <PropertyDetailSimilarProperties similarProperties={similarProperties} />
                     <PropertyDetailBanner />
                 </main>

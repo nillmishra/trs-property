@@ -1,27 +1,27 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import DetailSearchCard from '../../ui/detail-search-card'
-import { useGetCustomerPropertyQuery } from '@/service/propertyApi';
+import { useGetMyPropertiesQuery } from '@/service/propertyApi';
 import PropertySearchBar from '../../ui/property-search-bar';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 const MyPropertyCard = () => {
     const { token } = useSelector((state) => state.auth);
-    const { data, isLoading } = useGetCustomerPropertyQuery(undefined, {
+    const { data, isLoading } = useGetMyPropertiesQuery({ limit: 1000 }, {
         skip: !token,
     });
     const [filteredProperties, setFilteredProperties] = useState([]);
 
     useEffect(() => {
-        if (data?.data) {
-            setFilteredProperties(data.data);
+        if (data?.data?.properties) {
+            setFilteredProperties(data.data.properties);
         }
     }, [data]);
 
 
     function handleSearchAndFilter(query = "", propertyType = null, activeTab = "") {
-        let result = [...data?.data];
+        let result = [...data?.data?.properties];
 
         if (query?.trim()) {
             const lowerQuery = query.toLowerCase();

@@ -2,24 +2,24 @@
 import { useEffect, useState } from "react"
 import PropertySearchFilterSidebar from "./property-search-filter-sidebar"
 import PropertySearchListing from "./property-search-listing"
-import { useGetPropertyQuery } from "@/service/propertyApi"
+import { useGetAllPropertiesQuery } from "@/service/propertyApi"
 import PropertySearchBar from "../../ui/property-search-bar"
 
 function PropertyDetailMainSection() {
     const [showFilters, setShowFilters] = useState(false)
-    const { data, isLoading } = useGetPropertyQuery()
+    const { data, isLoading } = useGetAllPropertiesQuery({ limit: 1000 })
     const [filteredProperties, setFilteredProperties] = useState([])
     const [searchQuery, setSearchQuery] = useState("")
 
     useEffect(() => {
-        if (data?.data) {
-            setFilteredProperties(data?.data)
+        if (data?.data?.properties) {
+            setFilteredProperties(data?.data?.properties)
         }
     }, [data]);
 
 
     function applyFilters(filters, searchText = searchQuery, activeTab = "") {
-        let result = [...data?.data];
+        let result = [...data?.data?.properties];
 
         if (searchText.trim()) {
             result = result?.filter(

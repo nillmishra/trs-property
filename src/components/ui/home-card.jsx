@@ -3,24 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { MapPin, IndianRupee, ArrowUpRight, Heart } from "lucide-react";
 import { useState } from "react";
+import { getImageUrl } from "@/utils/getImageUrl";
 
 function HomeCard({ property, index = 0 }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     
     // Handle both full URLs and relative paths
-    const getImageUrl = () => {
-        if (!property?.images?.length) return "/assets/images/detail/image4.jpg";
-        const img = property.images[0];
-        // If it's already a full URL, use it directly
-        if (img.startsWith('http://') || img.startsWith('https://')) {
-            return img;
-        }
-        // Otherwise, it's a relative path - use fallback
-        return "/assets/images/detail/image4.jpg";
-    };
+    // const getImageUrl = () => {
+    //     if (!property?.images?.length) return "/assets/images/detail/image4.jpg";
+    //     const img = property.images[0];
+    //     // If it's already a full URL, use it directly
+    //     if (img.startsWith('http://') || img.startsWith('https://')) {
+    //         return img;
+    //     }
+    //     // Otherwise, it's a relative path - use fallback
+    //     return "/assets/images/detail/image4.jpg";
+    // };
     
-    const mainImage = getImageUrl();
+    const mainImage = getImageUrl(property?.images?.[0]);
 
     const formatPrice = (price) => {
         if (!price) return "0";
@@ -77,7 +78,7 @@ function HomeCard({ property, index = 0 }) {
 
                 {/* Hover Arrow */}
                 <Link 
-                    href={`/property-detail-dark/${property?.id}`}
+                    href={`/property-detail-dark/${property?._id || property?.id}`}
                     className={`absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white flex items-center justify-center transition-all duration-300 transform ${isHovered ? 'translate-y-0 opacity-100 rotate-0' : 'translate-y-4 opacity-0 rotate-45'}`}
                 >
                     <ArrowUpRight className="w-5 h-5 text-[#171137]" />
@@ -86,7 +87,7 @@ function HomeCard({ property, index = 0 }) {
 
             {/* Content */}
             <Link 
-                href={`/property-detail-dark/${property?.id}`}
+                href={`/property-detail-dark/${property?._id || property?.id}`}
                 className="p-5 flex-1 flex flex-col justify-between"
             >
                 <div>

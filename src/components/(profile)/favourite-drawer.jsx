@@ -5,18 +5,18 @@ import { Fragment, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
-import { basedUrl } from "@/libs/based-url";
+import { getImageUrl } from "@/utils/getImageUrl";
 import { toggleFavorite } from "@/redux/favoriteSlice";
-import { useGetPropertyQuery } from "@/service/propertyApi";
+import { useGetAllPropertiesQuery } from "@/service/propertyApi";
 import { useRouter } from "next/navigation";
 
 export default function FavouriteDrawer() {
     const router = useRouter();
-    const { data } = useGetPropertyQuery();
+    const { data } = useGetAllPropertiesQuery({ limit: 1000 });
     const { favorites } = useSelector((state) => state.favorite);
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
-    const filterFavourite = data?.data?.filter((property) => favorites?.includes(property.id));
+    const filterFavourite = data?.data?.properties?.filter((property) => favorites?.includes(property._id));
 
     const handleRemoveFavorite = (id, e) => {
         e.stopPropagation();
@@ -81,9 +81,7 @@ export default function FavouriteDrawer() {
                                 {filterFavourite?.length > 0 ? (
                                     <ul className="space-y-3">
                                         {filterFavourite?.map((item) => {
-                                            const imageUrl = item?.images?.length
-                                                ? basedUrl + item?.images[0]
-                                                : "/assets/images/detail/image4.jpg";
+                                            const imageUrl = getImageUrl(item?.images?.[0]);
 
                                             return (
                                                 <motion.li

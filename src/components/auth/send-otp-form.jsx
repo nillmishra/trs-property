@@ -1,11 +1,11 @@
-import { useSendOtpMutation } from "@/service/authApi";
+import { useLoginSendOtpMutation } from "@/service/authApi";
 import { useFormik } from "formik";
 import { Loader, X } from "lucide-react";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 
 function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
-    const [sendOtp, { isLoading }] = useSendOtpMutation();
+    const [sendOtp, { isLoading }] = useLoginSendOtpMutation();
 
     const formik = useFormik({
         initialValues: {
@@ -20,8 +20,8 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
         }),
         onSubmit: async (values) => {
             try {
-                const response = await sendOtp(values).unwrap();
-                toast.success(response?.message);
+                const response = await sendOtp({ phone: values.phone }).unwrap();
+                toast.success(response?.message || "OTP sent successfully");
                 setSendOtpInfo({
                     phone: values?.phone,
                     role: values?.role

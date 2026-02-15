@@ -4,15 +4,15 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Upload, X, Plus, Loader } from "lucide-react";
 import {
-  useAddAndEditBothPropertyMutation,
-  useAddPropertyMutation,
+  useCreatePropertyMutation,
   useGetSinglePropertyQuery,
-  useUploadPropertyDocumentMutation,
+  useAddAndEditBothPropertyMutation,
   useUploadPropertyImageMutation,
+  useUploadPropertyDocumentMutation,
 } from "@/service/propertyApi";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
-import { basedUrl } from "@/libs/based-url";
+import { getImageUrl } from "@/utils/getImageUrl";
 import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object({
@@ -54,26 +54,31 @@ export default function ResidentialForm({ property_type }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const [addAndEditBothProperty, { isLoading }] =
-    useAddAndEditBothPropertyMutation();
-  const [uploadPropertyImage, { isLoading: isLoadingUploadImage }] =
-    useUploadPropertyImageMutation();
-  const [uploadPropertyDocument, { isLoading: isLoadingUploadDocument }] =
-    useUploadPropertyDocumentMutation();
+  
+  // New API for creating properties
+  const [createProperty, { isLoading: isCreating }] = useCreatePropertyMutation();
+  
+  // Old API for editing properties (since new API doesn't have update yet)
+  const [addAndEditBothProperty, { isLoading: isLoadingOld }] = useAddAndEditBothPropertyMutation();
+  const [uploadPropertyImage, { isLoading: isLoadingUploadImage }] = useUploadPropertyImageMutation();
+  const [uploadPropertyDocument, { isLoading: isLoadingUploadDocument }] = useUploadPropertyDocumentMutation();
+  
   const { data } = useGetSinglePropertyQuery(id, { skip: !id });
   const property = data?.data?.[0] || {};
   const [images, setImages] = useState([]);
   const [documents, setDocuments] = useState([]);
   const { token } = useSelector((state) => state.auth);
+  
+  const isLoading = isCreating || isLoadingOld;
 
   useEffect(() => {
     if (property?.id) {
       const formattedImages = (property?.images || [])?.map((img) => ({
-        url: basedUrl + img,
+        url: getImageUrl(img),
         fromApi: true,
       }));
       const formattedDocuments = (property?.documents || [])?.map((doc) => ({
-        url: basedUrl + doc,
+        url: getImageUrl(doc),
         name: doc.split("/").pop(),
         fromApi: true,
       }));
@@ -106,45 +111,101 @@ export default function ResidentialForm({ property_type }) {
     },
     validationSchema,
     onSubmit: async (values) => {
-         if (!token) {
-  localStorage.setItem("pendingFormSubmit", "true");
-  window.dispatchEvent(new Event("open-auth-modal"));
-  return;
-}
-
+      if (!token) {
+        localStorage.setItem("pendingFormSubmit", "true");
+        window.dispatchEvent(new Event("open-auth-modal"));
+        return;
+      }
 
       try {
-        if (images?.length > 0 && documents?.length > 0) {
-          const response = await addAndEditBothProperty({
-            ...values,
-            property_type,
-            id,
-          }).unwrap();
-          const propertyId = response?.data?.id;
-          if (images?.length > 0) {
-            for (const img of images) {
-              if (img?.file) {
-                const imageForm = new FormData();
-                imageForm.append("property", propertyId);
-                imageForm.append("image", img?.file);
-                await uploadPropertyImage({ imageForm });
+        // EDIT MODE - Use old API
+        if (id) {
+          if (images?.length > 0 && documents?.length > 0) {
+            const response = await addAndEditBothProperty({
+              ...values,
+              property_type,
+              id,
+            }).unwrap();
+            const propertyId = response?.data?.id;
+            
+            // Upload new images
+            if (images?.length > 0) {
+              for (const img of images) {
+                if (img?.file) {
+                  const imageForm = new FormData();
+                  imageForm.append("property", propertyId);
+                  imageForm.append("image", img?.file);
+                  await uploadPropertyImage({ imageForm });
+                }
               }
             }
-          }
-          if (documents?.length > 0) {
-            for (const doc of documents) {
-              if (doc?.file) {
-                const docForm = new FormData();
-                docForm.append("property", propertyId);
-                docForm.append("document", doc?.file);
-                await uploadPropertyDocument({ docForm });
+            
+            // Upload new documents
+            if (documents?.length > 0) {
+              for (const doc of documents) {
+                if (doc?.file) {
+                  const docForm = new FormData();
+                  docForm.append("property", propertyId);
+                  docForm.append("document", doc?.file);
+                  await uploadPropertyDocument({ docForm });
+                }
               }
             }
+            
+            toast.success(response?.message);
+            router.push("/my-property");
+          } else {
+            toast.error("Please upload at least one image and one document.");
           }
-          toast.success(response?.message);
-          router.push("/post-property");
-        } else {
-          toast.error("Please upload at least one image and one document.");
+        } 
+        // CREATE MODE - Use new API
+        else {
+          if (images?.length === 0) {
+            toast.error("Please upload at least one image.");
+            return;
+          }
+
+          // Create FormData for new API
+          const formData = new FormData();
+          
+          // Map to new API field names
+          formData.append('title', values.title);
+          formData.append('propertyType', property_type);
+          formData.append('category', 'residential');
+          formData.append('city', values.city);
+          formData.append('price', values.expected_price);
+          
+          // Optional fields
+          if (values.project_name) formData.append('projectName', values.project_name);
+          if (values.possession_status) formData.append('possessionStatus', values.possession_status);
+          if (values.booking_amount) formData.append('bookingAmount', values.booking_amount);
+          formData.append('isNegotiable', values.priceNegotiable);
+          if (values.carpet_area) formData.append('carpetArea', values.carpet_area);
+          if (values.super_area) formData.append('superArea', values.super_area);
+          if (values.bedrooms) formData.append('bedrooms', values.bedrooms);
+          if (values.bathrooms) formData.append('bathrooms', values.bathrooms);
+          if (values.balconies) formData.append('balconies', values.balconies);
+          if (values.rera_id) formData.append('reraId', values.rera_id);
+          if (values.builder_name) formData.append('builderName', values.builder_name);
+          if (values.nearby_landmarks) formData.append('landmarks', values.nearby_landmarks);
+          
+          // Add images
+          for (const img of images) {
+            if (img.file) {
+              formData.append('images', img.file);
+            }
+          }
+          
+          // Add documents
+          for (const doc of documents) {
+            if (doc.file) {
+              formData.append('documents', doc.file);
+            }
+          }
+
+          const response = await createProperty(formData).unwrap();
+          toast.success(response?.message || "Property created successfully. Waiting for admin approval.");
+          router.push("/my-property");
         }
       } catch (err) {
         console.error(err);
@@ -312,7 +373,7 @@ export default function ResidentialForm({ property_type }) {
                 {...formik.getFieldProps("possession_status")}
               >
                 <option value="">Select Status</option>
-                <option value="ready_to_move">Ready to Move</option>
+                <option value="ready-to-move">Ready to Move</option>
                 <option value="under_construction">Under Construction</option>
               </select>
               {formik.touched.possession_status &&

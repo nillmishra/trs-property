@@ -1,6 +1,7 @@
-import { basedUrl } from "@/libs/based-url";
+import { basedUrl, newBasedUrl } from "@/libs/based-url";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// Original API instance for old endpoints
 export const realStateAPI = createApi({
     reducerPath: "realStateAPI",
     baseQuery: fetchBaseQuery({
@@ -13,6 +14,33 @@ export const realStateAPI = createApi({
             return headers;
         },
     }),
-    tagTypes: ['profileKYC', 'getProperty', 'getCustomerProperty', 'requestStatus', 'favorite'],
+    tagTypes: [
+        'profileKYC', 
+        'getProperty', 
+        'getCustomerProperty', 
+        'requestStatus', 
+        'favorite',
+    ],
+    endpoints: () => ({}),
+});
+
+// New API instance for new backend endpoints
+export const newRealStateAPI = createApi({
+    reducerPath: "newRealStateAPI",
+    baseQuery: fetchBaseQuery({
+        baseUrl: newBasedUrl,
+        prepareHeaders: (headers, { getState }) => {
+            const token = getState().auth.token;
+            if (token) {
+                headers.set("Authorization", `Bearer ${token}`);
+            }
+            return headers;
+        },
+    }),
+    tagTypes: [
+        'properties',
+        'myProperties',
+        'currentUser',
+    ],
     endpoints: () => ({}),
 });

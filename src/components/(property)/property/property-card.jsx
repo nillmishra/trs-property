@@ -1,14 +1,14 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import DetailSearchCard from '../../ui/detail-search-card'
-import { useGetPropertyQuery } from '@/service/propertyApi';
+import { useGetAllPropertiesQuery } from '@/service/propertyApi';
 import PropertySearchBar from '../../ui/property-search-bar';
 import PropertySearchFilterSidebar from '../property-search/property-search-filter-sidebar'
 import SquareCard from './square-card';
 import { Home, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PropertyCard = ({ cards }) => {
-    const { data, isLoading } = useGetPropertyQuery();
+    const { data, isLoading } = useGetAllPropertiesQuery({ limit: 1000 });
     const [filteredProperties, setFilteredProperties] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15; // 3 columns x 5 rows
@@ -29,8 +29,8 @@ const PropertyCard = ({ cards }) => {
 
     // Debug: Log total properties from API
     useEffect(() => {
-        if (data?.data) {
-            console.log("Total properties from API:", data.data.length);
+        if (data?.data?.properties) {
+            console.log("Total properties from API:", data.data.properties.length);
             applyAllFilters();
         }
     }, [data, searchFilters, sidebarFilters]);
@@ -42,9 +42,9 @@ const PropertyCard = ({ cards }) => {
 
     // Apply all filters
     const applyAllFilters = () => {
-        if (!data?.data) return;
+        if (!data?.data?.properties) return;
         
-        let result = [...data.data];
+        let result = [...data.data.properties];
         console.log("Before filters:", result.length);
 
         // Search query filter

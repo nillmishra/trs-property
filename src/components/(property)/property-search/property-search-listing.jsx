@@ -13,7 +13,7 @@ function PropertySearchListing({ properties, isLoading, setShowFilters }) {
         if (filter === "all") {
             setFilteredProperties(properties);
         } else if (filter === "ready") {
-            setFilteredProperties(properties.filter(p => p.possession_status === "ready_to_move"));
+            setFilteredProperties(properties.filter(p => p.possession_status === "ready-to-move"));
         } else if (filter === "development") {
             setFilteredProperties(properties.filter(p => p.possession_status === "under_construction"));
         } else if (filter === "furnished") {
