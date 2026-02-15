@@ -1,11 +1,14 @@
-import { useSignupSendOtpMutation } from "@/service/authApi";
+import { useDirectSignupMutation } from "@/service/authApi";
+import { setToken, setUser } from "@/redux/authSlice";
 import { useFormik } from "formik";
 import { Loader, X } from "lucide-react";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
 
 function SignupForm({ setActiveTab, onClose, sendOtpInfo, setSendOtpInfo }) {
-  const [signupSendOtp, { isLoading }] = useSignupSendOtpMutation();
+  const dispatch = useDispatch();
+  const [directSignup, { isLoading }] = useDirectSignupMutation();
 
   const formik = useFormik({
     initialValues: {
@@ -23,23 +26,23 @@ function SignupForm({ setActiveTab, onClose, sendOtpInfo, setSendOtpInfo }) {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await signupSendOtp({
+        const response = await directSignup({
           fullName: values.fullName,
           phone: values.phone,
           role: values.role,
         }).unwrap();
         
-        toast.success(response?.message || "OTP sent successfully");
+        // Handle successful signup
+        const token = response?.token || response?.data?.token;
+        const user = response?.user || response?.data?.user;
         
-        // Store signup info for verify OTP
-        setSendOtpInfo({
-          fullName: values.fullName,
-          phone: values.phone,
-          role: values.role,
-          isSignup: true, // Flag to indicate this is signup flow
-        });
-        
-        setActiveTab("verifyOtp");
+        if (token && user) {
+          dispatch(setToken(token));
+          dispatch(setUser(user));
+          toast.success(response?.message || "Signup successful");
+          window.dispatchEvent(new Event("resume-form-submit"));
+          onClose();
+        }
       } catch (err) {
         console.log(err);
         const errorMessage = err?.data?.message || err?.data?.error || 'Something went wrong';
@@ -132,7 +135,7 @@ function SignupForm({ setActiveTab, onClose, sendOtpInfo, setSendOtpInfo }) {
               <Loader />
             </div>
           ) : (
-            "Send OTP"
+            "Sign Up"
           )}
         </button>
 

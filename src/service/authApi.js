@@ -60,6 +60,41 @@ const authApiOld = realStateAPI.injectEndpoints({
 
 const authApiNew = newRealStateAPI.injectEndpoints({
     endpoints: (build) => ({
+        // ========================================
+        // 🔥 NEW DIRECT AUTH (No OTP Required) 
+        // ========================================
+        
+        // 1. Direct Signup (No OTP)
+        // POST /api/auth/signup
+        directSignup: build.mutation({
+            query: (formValues) => ({
+                url: `/api/auth/signup`,
+                method: "POST",
+                body: {
+                    fullName: formValues.fullName,
+                    phone: formValues.phone,
+                    role: formValues.role, // customer, builder, or agent
+                },
+            }),
+        }),
+
+        // 2. Direct Login (No OTP)
+        // POST /api/auth/login
+        directLogin: build.mutation({
+            query: (formValues) => ({
+                url: `/api/auth/login`,
+                method: "POST",
+                body: {
+                    phone: formValues.phone,
+                },
+            }),
+        }),
+
+        // ========================================
+        // 📝 OLD OTP-BASED ENDPOINTS (COMMENTED)
+        // ========================================
+        
+        /* 
         // 1. Signup - Send OTP
         // POST /api/auth/signup
         signupSendOtp: build.mutation({
@@ -113,6 +148,7 @@ const authApiNew = newRealStateAPI.injectEndpoints({
                 },
             }),
         }),
+        */
 
         // 5. Get Current User
         // GET /api/auth/me
@@ -130,7 +166,15 @@ export const {
     useSignUpMutation 
 } = authApiOld;
 
-// Export NEW hooks (for new API integration)
+// Export NEW hooks (Direct Auth - No OTP)
+export const {
+    useDirectSignupMutation,
+    useDirectLoginMutation,
+    useGetCurrentUserQuery,
+} = authApiNew;
+
+// 📝 OLD OTP-based hooks (COMMENTED OUT)
+/*
 export const {
     useSignupSendOtpMutation,
     useSignupVerifyOtpMutation,
@@ -138,6 +182,7 @@ export const {
     useLoginVerifyOtpMutation,
     useGetCurrentUserQuery,
 } = authApiNew;
+*/
 
 
 

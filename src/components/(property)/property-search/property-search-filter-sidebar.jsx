@@ -26,7 +26,7 @@ function PropertySearchFilterSidebar({ showFilters, setShowFilters, onFilterChan
 
   const propertyTypes = [
     { value: "Any", label: "Any Type", icon: Grid3X3 },
-    { value: "flat_apartment", label: "Apartment", icon: Building2 },
+    { value: "flat", label: "Apartment", icon: Building2 },
     { value: "villa", label: "Villa", icon: Home },
     { value: "plot", label: "Plot", icon: LandPlot },
     { value: "commercial", label: "Commercial", icon: Store },

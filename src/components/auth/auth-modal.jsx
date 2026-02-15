@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SignupForm from "./signup-form";
 import SendOtpForm from "./send-otp-form";
-import VerifyOtpForm from "./verify-otp-form";
+// import VerifyOtpForm from "./verify-otp-form"; // OTP functionality commented out
 
 export default function AuthModal({ isOpen, onClose }) {
   const [internalOpen, setInternalOpen] = useState(isOpen);
@@ -45,6 +45,7 @@ export default function AuthModal({ isOpen, onClose }) {
           exit={{ opacity: 0, scale: 0.9 }}
           className="bg-gradient-to-b from-[#1a1333] to-[#0d0a1a] rounded-lg shadow-xl w-full max-w-md z-10 mx-4"
         >
+          {/* Login Form (Direct Login - No OTP) */}
           {activeTab === "sendOtp" && (
             <SendOtpForm
               onClose={handleClose}
@@ -53,14 +54,7 @@ export default function AuthModal({ isOpen, onClose }) {
             />
           )}
 
-          {activeTab === "verifyOtp" && (
-            <VerifyOtpForm
-              onClose={handleClose}
-              sendOtpInfo={sendOtpInfo}
-              setActiveTab={setActiveTab}
-            />
-          )}
-
+          {/* Signup Form (Direct Signup - No OTP) */}
           {activeTab === "signup" && (
             <SignupForm
               setActiveTab={setActiveTab}
@@ -69,6 +63,15 @@ export default function AuthModal({ isOpen, onClose }) {
               setSendOtpInfo={setSendOtpInfo}
             />
           )}
+
+          {/* OTP Verification - COMMENTED OUT */}
+          {/* {activeTab === "verifyOtp" && (
+            <VerifyOtpForm
+              onClose={handleClose}
+              sendOtpInfo={sendOtpInfo}
+              setActiveTab={setActiveTab}
+            />
+          )} */}
         </motion.div>
       </div>
     </AnimatePresence>

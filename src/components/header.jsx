@@ -50,7 +50,7 @@ function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 w-full property-gradient backdrop-blur-sm">
-        <div className="container mx-auto py-3 flex items-center justify-between">
+        <div className="container mx-auto py-3 flex items-center gap-5 justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-end">
             <Image
@@ -64,7 +64,7 @@ function Header() {
               alt="Logo"
               width={200}
               height={200}
-              className="ml-[-20px]"
+              className="ml-[-10px]"
             />
           </Link>
 
