@@ -54,7 +54,7 @@ export default function HeaderDrawer({ menuOpen, setMenuOpen, links }) {
 
                                 <div className="mt-10">
                                     <Link href="/" className="text-2xl font-bold text-white flex items-center">
-                                        <Image src="/assets/logo/logo1.png" alt="Logo" width={100} height={100} />
+                                        <Image src="/assets/logo/logo2.avif" alt="Logo" width={100} height={100} />
                                     </Link>
                                     <ul className="space-y-5 mt-10">
                                         {links?.map(({ label, icon: Icon, href }) => (
