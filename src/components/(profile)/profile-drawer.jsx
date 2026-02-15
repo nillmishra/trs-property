@@ -75,7 +75,7 @@ export default function ProfileDrawer({ onLogout, user }) {
 
                                 <div className="mt-10">
                                     <Link href="/" className="text-2xl font-bold text-white flex items-center">
-                                        <Image src="/assets/logo/logo.png" alt="Logo" width={100} height={100} />
+                                        <Image src="/assets/logo/logo1.png" alt="Logo" width={100} height={100} />
                                     </Link>
                                     <ul className="space-y-5 mt-10">
                                         {menuItems?.map(({ name, icon: Icon, url }) => (
