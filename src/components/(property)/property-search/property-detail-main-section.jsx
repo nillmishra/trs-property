@@ -17,7 +17,6 @@ function PropertyDetailMainSection() {
         }
     }, [data]);
 
-
     function applyFilters(filters, searchText = searchQuery, activeTab = "") {
         let result = [...data?.data?.properties];
 
@@ -108,20 +107,23 @@ function PropertyDetailMainSection() {
 
     return (
         <>
+            {/* Search Bar - Already has correct width */}
             <PropertySearchBar onSearch={handleSearch} />
-            <div className="container mx-auto px-4">
-                <div className="flex flex-col md:flex-row gap-8">
-                    <PropertySearchFilterSidebar
-                        showFilters={showFilters}
-                        setShowFilters={setShowFilters}
-                        onFilterChange={applyFilters}
-                    />
-                    <PropertySearchListing
-                        properties={filteredProperties}
-                        isLoading={isLoading}
-                        setShowFilters={setShowFilters}
-                    />
-                </div>
+            
+            {/* Filter Sidebar - Now outside of container, matching search bar width */}
+            <PropertySearchFilterSidebar
+                showFilters={showFilters}
+                setShowFilters={setShowFilters}
+                onFilterChange={applyFilters} 
+            />
+            
+            {/* Property Listing Section - Same width as search bar */}
+            <div className="relative md:mx-28 px-4 sm:px-6 py-10">
+                <PropertySearchListing
+                    properties={filteredProperties}
+                    isLoading={isLoading}
+                    setShowFilters={setShowFilters}
+                />
             </div>
         </>
     )
