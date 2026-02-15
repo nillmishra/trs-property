@@ -1,32 +1,39 @@
-import { useLoginSendOtpMutation } from "@/service/authApi";
+import { useDirectLoginMutation } from "@/service/authApi";
+import { setToken, setUser } from "@/redux/authSlice";
 import { useFormik } from "formik";
 import { Loader, X } from "lucide-react";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
 
 function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
-    const [sendOtp, { isLoading }] = useLoginSendOtpMutation();
+    const dispatch = useDispatch();
+    const [directLogin, { isLoading }] = useDirectLoginMutation();
 
     const formik = useFormik({
         initialValues: {
             phone: "",
-            role: "",
         },
         validationSchema: Yup.object({
             phone: Yup.string()
                 .matches(/^\d{10}$/, "Mobile number must be exactly 10 digits")
                 .required("Mobile Number is required"),
-            role: Yup.string().oneOf(["customer", "agent", "builder"], "Select a valid role").required("Role is required"),
         }),
         onSubmit: async (values) => {
             try {
-                const response = await sendOtp({ phone: values.phone }).unwrap();
-                toast.success(response?.message || "OTP sent successfully");
-                setSendOtpInfo({
-                    phone: values?.phone,
-                    role: values?.role
-                });
-                setActiveTab("verifyOtp");
+                const response = await directLogin({ phone: values.phone }).unwrap();
+                
+                // Handle successful login
+                const token = response?.token || response?.data?.token;
+                const user = response?.user || response?.data?.user;
+                
+                if (token && user) {
+                    dispatch(setToken(token));
+                    dispatch(setUser(user));
+                    toast.success(response?.message || "Login successful");
+                    window.dispatchEvent(new Event("resume-form-submit"));
+                    onClose();
+                }
             } catch (err) {
                 console.log(err);
                 // Check if user not found - redirect to signup
@@ -34,12 +41,12 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
                 if (errorMessage.toLowerCase().includes('not found') || 
                     errorMessage.toLowerCase().includes('not registered') ||
                     errorMessage.toLowerCase().includes('please signup') ||
-                    errorMessage.toLowerCase().includes('user does not exist')) {
+                    errorMessage.toLowerCase().includes('user does not exist') ||
+                    errorMessage.toLowerCase().includes('please login')) {
                     toast.error("User not found. Please signup first.");
-                    // Pre-fill signup form with phone and role
+                    // Pre-fill signup form with phone
                     setSendOtpInfo({
                         phone: values?.phone,
-                        role: values?.role
                     });
                     setActiveTab("signup");
                 } else {
@@ -58,7 +65,7 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
                 </button>
             </div>
             <form onSubmit={formik.handleSubmit}>
-                <div className="mb-2">
+                <div className="mb-4">
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
                         Phone Number
                     </label>
@@ -75,26 +82,6 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
                     )}
                 </div>
 
-                <div className="mb-4">
-                    <label htmlFor="role" className="block text-sm font-medium text-gray-300 mb-1">
-                        Role
-                    </label>
-                    <select
-                        id="role"
-                        className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white"
-                        {...formik.getFieldProps("role")}
-                    >
-                        <option value="">Select Role</option>
-                        <option value="customer">Customer</option>
-                        <option value="agent">Agent</option>
-                        <option value="builder">Builder</option>
-                    </select>
-                    {formik.errors.role && (
-                        <div className="text-red-500 text-sm">{formik.errors.role}</div>
-                    )}
-                </div>
-
-
                 <button
                     type="submit"
                     disabled={isLoading}
@@ -105,7 +92,7 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
                             <Loader />
                         </div>
                     ) : (
-                        "Send OTP"
+                        "Login"
                     )}
                 </button>
 

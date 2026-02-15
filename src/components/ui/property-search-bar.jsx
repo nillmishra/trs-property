@@ -195,7 +195,7 @@ function PropertySearchBar({ onSearch }) {
                                     onChange={(e) => setPropertyType(e.target.value)}
                                 >
                                     <option value="Any" className="bg-white text-gray-900">Choose Property Type</option>
-                                    <option value="flat_apartment" className="bg-white text-gray-900">Flat Apartment</option>
+                                    <option value="flat" className="bg-white text-gray-900">Flat Apartment</option>
                                     <option value="villa" className="bg-white text-gray-900">House Villa</option>
                                     <option value="builder" className="bg-white text-gray-900">Builder Floor</option>
                                     <option value="plot" className="bg-white text-gray-900">Plot</option>
