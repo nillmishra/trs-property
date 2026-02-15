@@ -18,6 +18,11 @@ const nextConfig = {
                 hostname: 'rx100realty.in',
                 pathname: '/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+                pathname: '/**',
+            }
         ],
     },
 };

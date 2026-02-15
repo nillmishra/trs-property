@@ -4,7 +4,7 @@ import favoriteReducer from './favoriteSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
-import { realStateAPI } from './createAPI';
+import { realStateAPI, newRealStateAPI } from './createAPI';
 
 const persistConfig = {
     key: 'root',
@@ -14,6 +14,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     [realStateAPI.reducerPath]: realStateAPI.reducer,
+    [newRealStateAPI.reducerPath]: newRealStateAPI.reducer,
     auth: authReducer,
     favorite: favoriteReducer,
 });
@@ -25,7 +26,9 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }).concat(realStateAPI.middleware),
+        })
+        .concat(realStateAPI.middleware)
+        .concat(newRealStateAPI.middleware),
 });
 
 export const persistor = persistStore(store);

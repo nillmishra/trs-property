@@ -1,5 +1,5 @@
 "use client"
-import { basedUrl } from "@/libs/based-url";
+import { getImageUrl } from "@/utils/getImageUrl";
 import { useSendNotificationMutation } from "@/service/notificationApi";
 import { useRequestTourMutation } from "@/service/tourApi";
 import { ArrowDownRight, Bath, Bed, Calendar, Download, Loader, Square } from "lucide-react"
@@ -18,7 +18,7 @@ function PropertyPropertyDetail({ propertyFeatures, facilities, property, reques
     const handleDownload = () => {
         if (property?.documents?.length > 0) {
             property?.documents.forEach((docUrl) => {
-                window.open(basedUrl + docUrl, '_blank');
+                window.open(getImageUrl(docUrl), '_blank');
             });
         }
     };

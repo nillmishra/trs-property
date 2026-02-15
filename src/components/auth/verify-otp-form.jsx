@@ -1,12 +1,12 @@
 import { setToken, setUser } from "@/redux/authSlice";
-import { useVerifyOtpMutation } from "@/service/authApi";
-import { Loader, X } from "lucide-react";
+import { useLoginVerifyOtpMutation, useSignupVerifyOtpMutation } from "@/service/authApi";
+import { Loader, X, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 
-function OtpInput({ length = 4, onChange }) {
+function OtpInput({ length = 6, onChange }) {
     const [otp, setOtp] = useState(Array(length).fill(""));
     const inputsRef = useRef([]);
 
@@ -49,30 +49,68 @@ function OtpInput({ length = 4, onChange }) {
     );
 }
 
-function VerifyOtpForm({ onClose, sendOtpInfo }) {
+function VerifyOtpForm({ onClose, sendOtpInfo, setActiveTab }) {
     const dispatch = useDispatch();
     const router = useRouter();
     const [otpValue, setOtpValue] = useState("");
-    const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+    const [loginVerifyOtp, { isLoading: isLoginLoading }] = useLoginVerifyOtpMutation();
+    const [signupVerifyOtp, { isLoading: isSignupLoading }] = useSignupVerifyOtpMutation();
+
+    const isLoading = isLoginLoading || isSignupLoading;
+    const isSignup = sendOtpInfo?.isSignup;
 
     const handleOtpChange = (value) => {
         setOtpValue(value);
     };
 
+    const handleBack = () => {
+        if (isSignup) {
+            setActiveTab("signup");
+        } else {
+            setActiveTab("sendOtp");
+        }
+    };
+
     const handlerVerifyOtp = async () => {
-        if (!otpValue) return toast.error("please fill the otp input");
+        if (!otpValue || otpValue.length < 6) return toast.error("Please enter 6-digit OTP");
+        
         try {
-            const response = await verifyOtp({ otp: otpValue, phone: sendOtpInfo?.phone, role: sendOtpInfo?.role }).unwrap();
-            if (response?.status) {
-                dispatch(setToken(response?.user?.access_token));
-                dispatch(setUser(response?.user));
-                toast.success(response?.message);
+            let response;
+            
+            if (isSignup) {
+                // Signup flow - use signupVerifyOtp
+                response = await signupVerifyOtp({
+                    fullName: sendOtpInfo?.fullName,
+                    phone: sendOtpInfo?.phone,
+                    otp: otpValue,
+                    role: sendOtpInfo?.role,
+                }).unwrap();
+            } else {
+                // Login flow - use loginVerifyOtp
+                response = await loginVerifyOtp({
+                    otp: otpValue,
+                    phone: sendOtpInfo?.phone,
+                }).unwrap();
+            }
+
+            if (response?.success || response?.token) {
+                // New API returns token directly in response
+                const token = response?.token || response?.data?.token;
+                const user = response?.user || response?.data?.user || { 
+                    phone: sendOtpInfo?.phone, 
+                    role: sendOtpInfo?.role,
+                    fullName: sendOtpInfo?.fullName,
+                };
+                
+                dispatch(setToken(token));
+                dispatch(setUser(user));
+                toast.success(response?.message || (isSignup ? "Signup successful" : "Login successful"));
                 window.dispatchEvent(new Event("resume-form-submit"));
                 onClose();
             }
         } catch (err) {
             console.log(err);
-            toast.error(err?.data?.message || 'Something went wrong');
+            toast.error(err?.data?.message || 'Invalid OTP. Please try again.');
         }
     }
 
@@ -80,13 +118,28 @@ function VerifyOtpForm({ onClose, sendOtpInfo }) {
         <>
             <div className="p-6">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-bold text-white">Welcome to RX100 Verify Otp</h2>
+                    <div className="flex items-center gap-2">
+                        <button 
+                            onClick={handleBack} 
+                            className="text-gray-400 hover:text-white cursor-pointer"
+                        >
+                            <ArrowLeft className="h-5 w-5" />
+                        </button>
+                        <h2 className="text-xl font-bold text-white">
+                            {isSignup ? "Verify Signup OTP" : "Verify Login OTP"}
+                        </h2>
+                    </div>
                     <button onClick={onClose} className="text-gray-400 hover:text-white cursor-pointer">
                         <X className="h-5 w-5" />
                     </button>
                 </div>
+                
+                <p className="text-gray-400 text-sm text-center mb-4">
+                    OTP sent to <span className="text-white font-medium">{sendOtpInfo?.phone}</span>
+                </p>
+
                 <div className="mt-6 flex flex-col justify-start items-center space-y-4">
-                    <label className="block text-sm font-medium text-gray-300">Enter OTP</label>
+                    <label className="block text-sm font-medium text-gray-300">Enter 6-digit OTP</label>
                     <OtpInput onChange={handleOtpChange} />
                     <button
                         type="submit"
@@ -99,7 +152,7 @@ function VerifyOtpForm({ onClose, sendOtpInfo }) {
                                 <Loader />
                             </div>
                         ) : (
-                            "Verify Otp"
+                            isSignup ? "Create Account" : "Verify & Login"
                         )}
                     </button>
                 </div>

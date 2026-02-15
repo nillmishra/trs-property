@@ -1,4 +1,4 @@
-import { basedUrl } from '@/libs/based-url';
+import { getImageUrl } from '@/utils/getImageUrl';
 import { useGetProfileKYCQuery, useProfileKYCMutation } from '@/service/profileApi';
 import { Loader } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -51,9 +51,9 @@ const ProfileFormKyc = () => {
     useEffect(() => {
         if (data?.data) {
             setPreviews({
-                govt_id: data?.data?.govt_id ? basedUrl + data?.data?.govt_id : null,
-                visiting_card: data?.data?.visiting_card ? basedUrl + data?.data?.visiting_card : null,
-                rera_certificate: data?.data?.rera_certificate ? basedUrl + data?.data?.rera_certificate : null,
+                govt_id: data?.data?.govt_id ? getImageUrl(data.data.govt_id) : null,
+                visiting_card: data?.data?.visiting_card ? getImageUrl(data.data.visiting_card) : null,
+                rera_certificate: data?.data?.rera_certificate ? getImageUrl(data.data.rera_certificate) : null,
             });
         }
     }, [data]);

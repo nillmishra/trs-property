@@ -1,18 +1,18 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import DetailSearchCard from '../../ui/detail-search-card'
-import { useGetPropertyQuery } from '@/service/propertyApi';
+import { useGetAllPropertiesQuery } from '@/service/propertyApi';
 import PropertySearchBar from '../../ui/property-search-bar';
 import { useSelector } from 'react-redux';
 
 const PropertyFavouriteCard = () => {
-    const { data, isLoading } = useGetPropertyQuery();
+    const { data, isLoading } = useGetAllPropertiesQuery({ limit: 1000 });
     const { favorites } = useSelector((state) => state.favorite);
-    const filtered = data?.data?.filter((property) => favorites?.includes(property.id));
+    const filtered = data?.data?.properties?.filter((property) => favorites?.includes(property._id));
     const [filteredProperties, setFilteredProperties] = useState([]);
 
     useEffect(() => {
-        if (data?.data && favorites) {
+        if (data?.data?.properties && favorites) {
             setFilteredProperties(filtered);
         }
     }, [data, favorites]);

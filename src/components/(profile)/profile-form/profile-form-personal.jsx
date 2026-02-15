@@ -6,12 +6,12 @@ import * as Yup from 'yup';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { basedUrl } from '@/libs/based-url';
+import { getImageUrl } from '@/utils/getImageUrl';
 
 const ProfileFormPersonal = ({ user }) => {
     const [profileUpdate, { isLoading }] = useProfileUpdateMutation();
     const dispatch = useDispatch();
-    const [previewImage, setPreviewImage] = useState(user?.image ? basedUrl + user.image : '/assets/images/profile.png');
+    const [previewImage, setPreviewImage] = useState(user?.image ? getImageUrl(user.image) : '/assets/images/profile.png');
     const [imageFile, setImageFile] = useState('');
 
     const formik = useFormik({

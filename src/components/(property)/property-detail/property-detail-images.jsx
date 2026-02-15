@@ -8,7 +8,7 @@ import { Navigation, Pagination } from "swiper/modules"
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { basedUrl } from "@/libs/based-url"
+import { getImageUrl } from "@/utils/getImageUrl"
 
 function PropertyDetailImages({ property }) {
     const [showAllPhotos, setShowAllPhotos] = useState(false)
@@ -25,7 +25,7 @@ function PropertyDetailImages({ property }) {
                         className="md:col-span-2 relative rounded-lg overflow-hidden"
                     >
                         <Image
-                            src={`${basedUrl}/${property?.images[0]}`}
+                            src={getImageUrl(property?.images?.[0])}
                             alt="Property Main Image"
                             width={800}
                             height={500}
@@ -41,7 +41,7 @@ function PropertyDetailImages({ property }) {
                             className="relative rounded-lg overflow-hidden"
                         >
                             <Image
-                                src={`${basedUrl}/${property?.images[1]}`}
+                                src={getImageUrl(property?.images?.[1])}
                                 alt="Property Image 2"
                                 width={400}
                                 height={200}
@@ -56,7 +56,7 @@ function PropertyDetailImages({ property }) {
                             className="relative rounded-lg overflow-hidden"
                         >
                             <Image
-                                src={`${basedUrl}/${property?.images[2]}`}
+                                src={getImageUrl(property?.images?.[2])}
                                 alt="Property Image 3"
                                 width={400}
                                 height={200}
@@ -104,7 +104,7 @@ function PropertyDetailImages({ property }) {
                                 {property?.images?.map((img, index) => (
                                     <SwiperSlide key={index}>
                                         <Image
-                                            src={`${basedUrl}/${img}`}
+                                            src={getImageUrl(img)}
                                             alt={`Slide ${index + 1}`}
                                             width={1200}
                                             height={700}

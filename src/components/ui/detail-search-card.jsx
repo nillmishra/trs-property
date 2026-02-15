@@ -3,7 +3,7 @@ import { Bath, Bed, Heart, MapPin, Square, Edit, Trash, Loader, Phone } from 'lu
 import Image from 'next/image';
 import React from 'react';
 import { motion } from "framer-motion";
-import { basedUrl } from '@/libs/based-url';
+import { getImageUrl } from '@/utils/getImageUrl';
 import Link from 'next/link';
 import { useDeletePropertyMutation } from '@/service/propertyApi';
 import toast from 'react-hot-toast';
@@ -11,7 +11,7 @@ import { useSendNotificationMutation } from '@/service/notificationApi';
 import { useToogleFavoritesMutation } from '@/service/favoriteApi';
 
 function DetailSearchCard({ property, action = false }) {
-    const mainImage = property?.images?.length > 0 ? basedUrl + property?.images[0] : "/assets/images/detail/image4.jpg";
+    const mainImage = getImageUrl(property?.images?.[0]);
     const [deleteProperty] = useDeletePropertyMutation();
     const [sendNotification, { isLoading }] = useSendNotificationMutation();
     const [toogleFavorites] = useToogleFavoritesMutation();
@@ -88,7 +88,7 @@ function DetailSearchCard({ property, action = false }) {
                 </button>
             </div>
 
-            <Link href={`/property-detail-dark/${property?.id}`} className="p-4 block">
+            <Link href={`/property-detail-dark/${property?._id || property?.id}`} className="p-4 block">
                 <div className="flex justify-between items-start mb-2">
                     <h3 className="md:text-lg font-bold text-gray-900 line-clamp-1 group-hover:text-amber-600 transition-colors">
                         {property?.title?.split(' ')?.slice(0, 4)?.join(' ')}

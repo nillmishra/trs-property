@@ -1,42 +1,61 @@
-import { useSignUpMutation } from "@/service/authApi";
+import { useSignupSendOtpMutation } from "@/service/authApi";
 import { useFormik } from "formik";
 import { Loader, X } from "lucide-react";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 
-function SignupForm({ setActiveTab, onClose }) {
-  const [signUp, { isLoading }] = useSignUpMutation();
+function SignupForm({ setActiveTab, onClose, sendOtpInfo, setSendOtpInfo }) {
+  const [signupSendOtp, { isLoading }] = useSignupSendOtpMutation();
 
   const formik = useFormik({
     initialValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      mobile_no: "",
-      company_name: "",
-      city: "",
-      role: "customer",
+      fullName: "",
+      phone: sendOtpInfo?.phone || "",
+      role: sendOtpInfo?.role || "customer",
     },
+    enableReinitialize: true,
     validationSchema: Yup.object({
-      first_name: Yup.string().required("First Name is required"),
-      last_name: Yup.string().required("Last Name is required"),
-      email: Yup.string().email("Invalid email address").required("Email is required"),
-      mobile_no: Yup.string()
+      fullName: Yup.string().required("Full Name is required"),
+      phone: Yup.string()
         .matches(/^\d{10}$/, "Mobile number must be exactly 10 digits")
         .required("Mobile Number is required"),
-      company_name: Yup.string().required("Company Name is required"),
-      city: Yup.string().required("City is required"),
-      role: Yup.string().oneOf(["customer", "agent"], "Select a valid role").required("Role is required"),
+      role: Yup.string().oneOf(["customer", "agent", "builder"], "Select a valid role").required("Role is required"),
     }),
     onSubmit: async (values) => {
       try {
-        const response = await signUp({ ...values }).unwrap();
-        if (response?.status) {
-          toast.success(response?.message || "Customer created successfully");
-          setActiveTab("sendOtp");
-        }
+        const response = await signupSendOtp({
+          fullName: values.fullName,
+          phone: values.phone,
+          role: values.role,
+        }).unwrap();
+        
+        toast.success(response?.message || "OTP sent successfully");
+        
+        // Store signup info for verify OTP
+        setSendOtpInfo({
+          fullName: values.fullName,
+          phone: values.phone,
+          role: values.role,
+          isSignup: true, // Flag to indicate this is signup flow
+        });
+        
+        setActiveTab("verifyOtp");
       } catch (err) {
-        toast.error(err?.data?.message || "Something went wrong");
+        console.log(err);
+        const errorMessage = err?.data?.message || err?.data?.error || 'Something went wrong';
+        
+        // Check if user already exists - redirect to login
+        if (errorMessage.toLowerCase().includes('already exists') || 
+            errorMessage.toLowerCase().includes('already registered')) {
+          toast.error("User already exists. Please login instead.");
+          setSendOtpInfo({
+            phone: values.phone,
+            role: values.role,
+          });
+          setActiveTab("sendOtp");
+        } else {
+          toast.error(errorMessage);
+        }
       }
     },
   });
@@ -44,111 +63,47 @@ function SignupForm({ setActiveTab, onClose }) {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-white">Welcome to RX100 Signup</h2>
+        <h2 className="text-xl font-bold text-white">Welcome to RX100 - Sign Up</h2>
         <button onClick={onClose} className="text-gray-400 hover:text-white cursor-pointer">
           <X className="h-5 w-5" />
         </button>
       </div>
       <form onSubmit={formik.handleSubmit}>
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="space-y-4">
           <div>
-            <label htmlFor="first_name" className="block text-sm font-medium text-gray-300 mb-1">
-              First Name
+            <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-1">
+              Full Name
             </label>
             <input
               type="text"
-              id="first_name"
-              className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white"
-              placeholder="Enter your first name"
-              {...formik.getFieldProps("first_name")}
+              id="fullName"
+              className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white focus:outline-none"
+              placeholder="Enter your full name"
+              {...formik.getFieldProps("fullName")}
             />
-            {formik.touched.first_name && formik.errors.first_name && (
-              <div className="text-red-500 text-sm">{formik.errors.first_name}</div>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="last_name" className="block text-sm font-medium text-gray-300 mb-1">
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="last_name"
-              className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white"
-              placeholder="Enter your last name"
-              {...formik.getFieldProps("last_name")}
-            />
-            {formik.touched.last_name && formik.errors.last_name && (
-              <div className="text-red-500 text-sm">{formik.errors.last_name}</div>
-            )}
-          </div>
-
-          <div className="col-span-2">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white"
-              placeholder="Enter your email"
-              {...formik.getFieldProps("email")}
-            />
-            {formik.touched.email && formik.errors.email && (
-              <div className="text-red-500 text-sm">{formik.errors.email}</div>
-            )}
-          </div>
-
-
-          <div className="col-span-2">
-            <label htmlFor="mobile_no" className="block text-sm font-medium text-gray-300 mb-1">
-              Mobile Number
-            </label>
-            <input
-              type="tel"
-              id="mobile_no"
-              className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white"
-              placeholder="Enter your mobile number"
-              {...formik.getFieldProps("mobile_no")}
-            />
-            {formik.touched.mobile_no && formik.errors.mobile_no && (
-              <div className="text-red-500 text-sm">{formik.errors.mobile_no}</div>
+            {formik.touched.fullName && formik.errors.fullName && (
+              <div className="text-red-500 text-sm">{formik.errors.fullName}</div>
             )}
           </div>
 
           <div>
-            <label htmlFor="company_name" className="block text-sm font-medium text-gray-300 mb-1">
-              Company Name
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
+              Phone Number
             </label>
             <input
               type="text"
-              id="company_name"
-              className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white"
-              placeholder="Enter your company name"
-              {...formik.getFieldProps("company_name")}
+              id="phone"
+              maxLength={10}
+              className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white focus:outline-none"
+              placeholder="Enter 10-digit phone number"
+              {...formik.getFieldProps("phone")}
             />
-            {formik.touched.company_name && formik.errors.company_name && (
-              <div className="text-red-500 text-sm">{formik.errors.company_name}</div>
+            {formik.touched.phone && formik.errors.phone && (
+              <div className="text-red-500 text-sm">{formik.errors.phone}</div>
             )}
           </div>
 
           <div>
-            <label htmlFor="city" className="block text-sm font-medium text-gray-300 mb-1">
-              City
-            </label>
-            <input
-              type="text"
-              id="city"
-              className="w-full px-3 py-2 bg-[#2a1f45] border border-[#3a2a5a] rounded text-white"
-              placeholder="Enter your city"
-              {...formik.getFieldProps("city")}
-            />
-            {formik.touched.city && formik.errors.city && (
-              <div className="text-red-500 text-sm">{formik.errors.city}</div>
-            )}
-          </div>
-
-          <div className="col-span-2">
             <label htmlFor="role" className="block text-sm font-medium text-gray-300 mb-1">
               Role
             </label>
@@ -170,16 +125,29 @@ function SignupForm({ setActiveTab, onClose }) {
         <button
           type="submit"
           disabled={isLoading}
-          className={`w-full mt-6 bg-[#2a1f45] hover:bg-[#3a2a5a] text-white font-medium py-2 rounded transition-colors h-12 flex items-center justify-center cursor-pointer`}
+          className="w-full mt-6 bg-[#2a1f45] hover:bg-[#3a2a5a] text-white font-medium py-2 rounded transition-colors h-10 flex items-center justify-center cursor-pointer"
         >
           {isLoading ? (
             <div className="animate-spin">
               <Loader />
             </div>
           ) : (
-            "Create Account"
+            "Send OTP"
           )}
         </button>
+
+        <div className="mt-4 text-center">
+          <p className="text-gray-400 text-sm">
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={() => setActiveTab("sendOtp")}
+              className="text-amber-400 hover:text-amber-300 font-medium cursor-pointer"
+            >
+              Login
+            </button>
+          </p>
+        </div>
       </form>
     </div>
   );

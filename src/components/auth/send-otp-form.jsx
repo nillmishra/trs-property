@@ -1,11 +1,11 @@
-import { useSendOtpMutation } from "@/service/authApi";
+import { useLoginSendOtpMutation } from "@/service/authApi";
 import { useFormik } from "formik";
 import { Loader, X } from "lucide-react";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 
 function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
-    const [sendOtp, { isLoading }] = useSendOtpMutation();
+    const [sendOtp, { isLoading }] = useLoginSendOtpMutation();
 
     const formik = useFormik({
         initialValues: {
@@ -20,8 +20,8 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
         }),
         onSubmit: async (values) => {
             try {
-                const response = await sendOtp(values).unwrap();
-                toast.success(response?.message);
+                const response = await sendOtp({ phone: values.phone }).unwrap();
+                toast.success(response?.message || "OTP sent successfully");
                 setSendOtpInfo({
                     phone: values?.phone,
                     role: values?.role
@@ -29,7 +29,22 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
                 setActiveTab("verifyOtp");
             } catch (err) {
                 console.log(err);
-                toast.error(err?.data?.message || 'Something went wrong');
+                // Check if user not found - redirect to signup
+                const errorMessage = err?.data?.message || err?.data?.error || '';
+                if (errorMessage.toLowerCase().includes('not found') || 
+                    errorMessage.toLowerCase().includes('not registered') ||
+                    errorMessage.toLowerCase().includes('please signup') ||
+                    errorMessage.toLowerCase().includes('user does not exist')) {
+                    toast.error("User not found. Please signup first.");
+                    // Pre-fill signup form with phone and role
+                    setSendOtpInfo({
+                        phone: values?.phone,
+                        role: values?.role
+                    });
+                    setActiveTab("signup");
+                } else {
+                    toast.error(errorMessage || 'Something went wrong');
+                }
             }
         },
     });
@@ -37,7 +52,7 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
     return (
         <div className="p-6">
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-white">Welcome to RX100 Send Otp</h2>
+                <h2 className="text-xl font-bold text-white">Welcome to RX100 - Login</h2>
                 <button onClick={onClose} className="text-gray-400 hover:text-white cursor-pointer">
                     <X className="h-5 w-5" />
                 </button>
@@ -90,9 +105,22 @@ function SendOtpForm({ onClose, setSendOtpInfo, setActiveTab }) {
                             <Loader />
                         </div>
                     ) : (
-                        "Send Otp"
+                        "Send OTP"
                     )}
                 </button>
+
+                <div className="mt-4 text-center">
+                    <p className="text-gray-400 text-sm">
+                        Don't have an account?{" "}
+                        <button
+                            type="button"
+                            onClick={() => setActiveTab("signup")}
+                            className="text-amber-400 hover:text-amber-300 font-medium cursor-pointer"
+                        >
+                            Sign up
+                        </button>
+                    </p>
+                </div>
             </form >
         </div >
     );

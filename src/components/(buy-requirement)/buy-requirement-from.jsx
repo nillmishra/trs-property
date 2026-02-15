@@ -174,7 +174,7 @@ export default function BuyRequirementForm({ property_type }) {
                                 {...formik.getFieldProps("possession_status")}
                             >
                                 <option value="">Select Status</option>
-                                <option value="ready_to_move">Ready to Move</option>
+                                <option value="ready-to-move">Ready to Move</option>
                                 <option value="under_construction">Under Construction</option>
                             </select>
                             {formik.touched.possession_status && formik.errors.possession_status && (
