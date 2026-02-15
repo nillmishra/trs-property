@@ -24,6 +24,11 @@ export default function AuthModal({ isOpen, onClose }) {
     setInternalOpen(isOpen);
   }, [isOpen]);
 
+  const handleClose = () => {
+    setInternalOpen(false);
+    onClose();
+  };
+
   if (!internalOpen) return null;
 
   return (
@@ -31,21 +36,18 @@ export default function AuthModal({ isOpen, onClose }) {
       <div className="fixed inset-0 z-50 flex items-center justify-center">
         <motion.div
           className="fixed inset-0 bg-black/70"
-          onClick={() => {
-            setInternalOpen(false);
-            onClose();
-          }}
+          onClick={handleClose}
         />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
-          className="bg-gradient-to-b from-[#1a1333] to-[#0d0a1a] rounded-lg shadow-xl w-full max-w-2xl z-10"
+          className="bg-gradient-to-b from-[#1a1333] to-[#0d0a1a] rounded-lg shadow-xl w-full max-w-md z-10 mx-4"
         >
           {activeTab === "sendOtp" && (
             <SendOtpForm
-              onClose={onClose}
+              onClose={handleClose}
               setSendOtpInfo={setSendOtpInfo}
               setActiveTab={setActiveTab}
             />
@@ -53,15 +55,18 @@ export default function AuthModal({ isOpen, onClose }) {
 
           {activeTab === "verifyOtp" && (
             <VerifyOtpForm
-              onClose={onClose}
+              onClose={handleClose}
               sendOtpInfo={sendOtpInfo}
+              setActiveTab={setActiveTab}
             />
           )}
 
           {activeTab === "signup" && (
             <SignupForm
               setActiveTab={setActiveTab}
-              onClose={onClose}
+              onClose={handleClose}
+              sendOtpInfo={sendOtpInfo}
+              setSendOtpInfo={setSendOtpInfo}
             />
           )}
         </motion.div>
