@@ -94,7 +94,7 @@ function DetailSearchCard({ property, action = false }) {
                         {property?.title?.split(' ')?.slice(0, 4)?.join(' ')}
                     </h3>
                     <p className="md:text-lg font-bold text-gray-900 text-nowrap">
-                        ₹ {property?.price ?? property?.expected_price} <span className="text-sm text-gray-500">Cr.</span>
+                        ₹ {property?.price ?? property?.expected_price} <span className="text-sm text-gray-500"></span>
                     </p>
                 </div>
 
