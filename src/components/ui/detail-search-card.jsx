@@ -2,6 +2,7 @@
 import { Bath, Bed, Heart, MapPin, Square, Edit, Trash, Loader, Phone } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { motion } from "framer-motion";
 import { getImageUrl } from '@/utils/getImageUrl';
 import Link from 'next/link';
@@ -14,6 +15,7 @@ function DetailSearchCard({ property, action = false }) {
     const mainImage = getImageUrl(property?.images?.[0]);
     const [deleteProperty] = useDeletePropertyMutation();
     const [sendNotification, { isLoading }] = useSendNotificationMutation();
+    const { token } = useSelector((state) => state.auth);
     const [toogleFavorites] = useToogleFavoritesMutation();
 
     const handleToggleFavorite = async (e) => {
@@ -41,6 +43,13 @@ function DetailSearchCard({ property, action = false }) {
     const handleSendNotification = async (e, id, name) => {
         e.preventDefault();
         e.stopPropagation();
+
+        // If user is not authenticated, open the auth modal instead of calling API
+        if (!token) {
+            window.dispatchEvent(new Event('open-auth-modal'));
+            return;
+        }
+
         try {
             const response = await sendNotification({ property_id: id, property_name: name }).unwrap();
             toast.success(response?.message);
