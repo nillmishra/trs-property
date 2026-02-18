@@ -16,11 +16,11 @@ import { Circle, HardHat, Home, User, Users2, Building2 } from "lucide-react";
 
 const links = [
   { href: "/", label: "HOME", icon: Home },
+  { href: "/about", label: "ABOUT US", icon: Circle },
   { href: "/property", label: "PROPERTIES", icon: Building2 },
-  { href: "/about", label: "ABOUT", icon: Circle },
-  { href: "/agent", label: "AGENT", icon: User },
-  { href: "/builder", label: "BUILDER", icon: HardHat },
-  { href: "/customer", label: "CUSTOMER", icon: Users2 },
+  { href: "/consultant-lounge", label: "CONSULTANT LOUNGE", icon: Users2 },
+  { href: "/builder-lounge", label: "BUILDER LOUNGE", icon: HardHat },
+  { href: "/contact", label: "CONTACT US", icon: User },
 ];
 
 function Header() {
