@@ -24,7 +24,6 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1500))
     setIsSubmitting(false)
     setIsSubmitted(true)
@@ -36,10 +35,7 @@ const ContactPage = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
     },
   }
 
@@ -48,10 +44,7 @@ const ContactPage = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      },
+      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   }
 
@@ -73,9 +66,8 @@ const ContactPage = () => {
     <>
       <Header />
       <main className="min-h-screen bg-[#0a0a0a]">
-        {/* Hero Section with Background */}
+        {/* Hero Section */}
         <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-          {/* Background Image */}
           <div className="absolute inset-0">
             <Image
               src="/assets/images/bgimage.jpg"
@@ -87,14 +79,13 @@ const ContactPage = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#0a0a0a]"></div>
           </div>
 
-          {/* Content */}
           <div className="relative z-10 container mx-auto px-4 text-center">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <motion.h1 
+              <motion.h1
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -102,7 +93,7 @@ const ContactPage = () => {
               >
                 Need help? <span className="text-[#C6A256]">Talk to our expert.</span>
               </motion.h1>
-              <motion.p 
+              <motion.p
                 className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -115,14 +106,13 @@ const ContactPage = () => {
             </motion.div>
           </div>
 
-          {/* Scroll indicator */}
-          <motion.div 
+          <motion.div
             className="absolute bottom-8 left-1/2 -translate-x-1/2"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           >
             <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
-              <motion.div 
+              <motion.div
                 className="w-1.5 h-1.5 bg-[#C6A256] rounded-full"
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
@@ -133,93 +123,50 @@ const ContactPage = () => {
 
         {/* Main Contact Section */}
         <section className="py-20 md:py-28 bg-gradient-to-b from-[#0a0a0a] via-[#0d0a14] to-[#0a0a0a] relative overflow-hidden">
-          {/* Background decorative elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#6B46C1]/5 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#492974]/5 rounded-full blur-3xl"></div>
           </div>
 
           <div className="container mx-auto px-4 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-              
-              {/* Left Side - India Map & Stats */}
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: false, amount: 0.2 }}
-                variants={containerVariants}
-                className="relative"
-              >
-                {/* India Map Illustration */}
-                <motion.div 
-                  variants={itemVariants}
-                  className="relative mb-12"
-                >
-                  <div className="relative w-full max-w-md mx-auto">
-                    {/* Map SVG placeholder - Orange India map */}
-                    <svg viewBox="0 0 400 450" className="w-full h-auto">
-                      <defs>
-                        <linearGradient id="indiaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#C6A256" />
-                          <stop offset="100%" stopColor="#a8893f" />
-                        </linearGradient>
-                      </defs>
-                      {/* Simplified India map shape */}
-                      <path
-                        fill="url(#indiaGradient)"
-                        d="M200,20 C240,25 280,40 300,60 C320,80 330,100 340,130 C350,160 355,190 350,220 C345,250 335,280 320,300 C305,320 285,335 260,345 C235,355 210,360 185,370 C160,380 140,395 130,410 C120,425 115,435 110,440 C105,435 100,425 95,410 C90,395 85,380 75,365 C65,350 50,340 40,325 C30,310 25,290 25,270 C25,250 30,230 40,210 C50,190 65,175 80,160 C95,145 110,130 120,115 C130,100 135,85 145,70 C155,55 170,40 185,30 C195,23 200,20 200,20 Z"
-                        className="drop-shadow-2xl"
-                      />
-                      {/* Text overlay on map */}
-                      <text x="200" y="180" textAnchor="middle" className="fill-[#0a0a0a] font-bold text-2xl">
-                        PAN INDIA
-                      </text>
-                      <text x="200" y="210" textAnchor="middle" className="fill-[#0a0a0a] font-medium text-sm tracking-widest">
-                        CONSULTING
-                      </text>
-                      <text x="200" y="270" textAnchor="middle" className="fill-[#0a0a0a] font-bold text-4xl">
-                        25+ YEARS
-                      </text>
-                      <text x="200" y="300" textAnchor="middle" className="fill-[#0a0a0a] font-medium text-sm tracking-widest">
-                        OF EXPERIENCE
-                      </text>
-                    </svg>
-                  </div>
-                </motion.div>
 
-                {/* Stats Grid */}
-                <motion.div 
-                  variants={containerVariants}
-                  className="grid grid-cols-2 gap-4"
-                >
-                  {stats.map((stat, index) => (
-                    <motion.div
-                      key={index}
-                      variants={itemVariants}
-                      whileHover={{ scale: 1.05, y: -5 }}
-                      className="bg-[#12121a] border border-white/5 rounded-2xl p-6 text-center hover:border-[#6B46C1]/30 transition-all duration-300"
-                    >
-                      <stat.icon className="w-8 h-8 text-[#C6A256] mx-auto mb-3" />
-                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</h3>
-                      <p className="text-white/50 text-sm">{stat.label}</p>
-                    </motion.div>
-                  ))}
-                </motion.div>
+            {/* Equal-height two columns — height driven by image column */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
+
+              {/* Left — India Map (no bg, blends into page) */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                viewport={{ once: false }}
+                className="flex items-center justify-center"
+              >
+                <Image
+                  src="/assets/images/india.png"
+                  alt="India Map"
+                  width={600}
+                  height={700}
+                  unoptimized
+                  className="w-full h-[575px] object-contain drop-shadow-2xl"
+                  style={{ mixBlendMode: 'screen' }}
+                />
               </motion.div>
 
-              {/* Right Side - Contact Form */}
+              {/* Right — Contact Form (no bg, no border, matches image height) */}
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 viewport={{ once: false }}
-                className="bg-[#12121a] border border-white/5 rounded-3xl p-8 md:p-10"
+                className="flex flex-col justify-between py-2"
               >
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Get in Touch</h2>
-                <p className="text-white/50 mb-8">Fill out the form and our team will get back to you within 24 hours.</p>
+                <div className="mb-6">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Get in Touch</h2>
+                  <p className="text-white/50">Fill out the form and our team will get back to you within 24 hours.</p>
+                </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form onSubmit={handleSubmit} className="flex flex-col flex-1 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-white/70 text-sm mb-2">First Name</label>
                       <input
@@ -228,7 +175,7 @@ const ContactPage = () => {
                         value={formData.firstName}
                         onChange={handleChange}
                         required
-                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-[#6B46C1] focus:outline-none transition-colors duration-300"
+                        className="w-full bg-transparent border-b border-white/20 px-0 py-3 text-white placeholder-white/30 focus:border-[#C6A256] focus:outline-none transition-colors duration-300"
                         placeholder="John"
                       />
                     </div>
@@ -240,7 +187,7 @@ const ContactPage = () => {
                         value={formData.lastName}
                         onChange={handleChange}
                         required
-                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-[#6B46C1] focus:outline-none transition-colors duration-300"
+                        className="w-full bg-transparent border-b border-white/20 px-0 py-3 text-white placeholder-white/30 focus:border-[#C6A256] focus:outline-none transition-colors duration-300"
                         placeholder="Doe"
                       />
                     </div>
@@ -254,7 +201,7 @@ const ContactPage = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-[#6B46C1] focus:outline-none transition-colors duration-300"
+                      className="w-full bg-transparent border-b border-white/20 px-0 py-3 text-white placeholder-white/30 focus:border-[#C6A256] focus:outline-none transition-colors duration-300"
                       placeholder="john@example.com"
                     />
                   </div>
@@ -266,19 +213,18 @@ const ContactPage = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-[#6B46C1] focus:outline-none transition-colors duration-300"
+                      className="w-full bg-transparent border-b border-white/20 px-0 py-3 text-white placeholder-white/30 focus:border-[#C6A256] focus:outline-none transition-colors duration-300"
                       placeholder="+91 98765 43210"
                     />
                   </div>
 
-                  <div>
+                  <div className="flex flex-col flex-1">
                     <label className="block text-white/70 text-sm mb-2">Message</label>
                     <textarea
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      rows={4}
-                      className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:border-[#6B46C1] focus:outline-none transition-colors duration-300 resize-none"
+                      className="w-full flex-1 bg-transparent border-b border-white/20 px-0 py-3 text-white placeholder-white/30 focus:border-[#C6A256] focus:outline-none transition-colors duration-300 resize-none min-h-[80px]"
                       placeholder="Tell us about your requirements..."
                     />
                   </div>
@@ -289,8 +235,8 @@ const ContactPage = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className={`w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-2 transition-all duration-300 ${
-                      isSubmitted 
-                        ? 'bg-green-600 text-white' 
+                      isSubmitted
+                        ? 'bg-green-600 text-white'
                         : 'bg-gradient-to-r from-[#C6A256] to-[#a8893f] text-[#0a0a0a] hover:shadow-lg hover:shadow-[#C6A256]/30'
                     }`}
                   >
@@ -315,6 +261,29 @@ const ContactPage = () => {
                 </form>
               </motion.div>
             </div>
+
+            {/* 4 Stats in one row below */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              variants={containerVariants}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8"
+            >
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="bg-[#12121a] border border-white/5 rounded-2xl p-6 text-center hover:border-[#6B46C1]/30 transition-all duration-300"
+                >
+                  <stat.icon className="w-8 h-8 text-[#C6A256] mx-auto mb-3" />
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</h3>
+                  <p className="text-white/50 text-sm">{stat.label}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+
           </div>
         </section>
 
@@ -330,13 +299,11 @@ const ContactPage = () => {
             referrerPolicy="no-referrer-when-downgrade"
             className="w-full h-full"
           />
-          {/* Map overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-transparent pointer-events-none h-20"></div>
         </section>
 
         {/* Contact Info Bar */}
         <section className="relative py-16 overflow-hidden">
-          {/* Background Image */}
           <div className="absolute inset-0">
             <Image
               src="/assets/images/bgimage.jpg"
@@ -356,45 +323,27 @@ const ContactPage = () => {
               className="bg-[#0d0a14]/90 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12"
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                {/* Call */}
-                <motion.div 
-                  variants={itemVariants}
-                  className="text-center"
-                >
+                <motion.div variants={itemVariants} className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#6B46C1] to-[#492974] rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Phone className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="text-white font-semibold text-xl mb-2">Call</h3>
-                  <a 
-                    href="tel:+919425092651" 
-                    className="text-[#C6A256] text-lg hover:text-white transition-colors duration-300"
-                  >
+                  <a href="tel:+919425092651" className="text-[#C6A256] text-lg hover:text-white transition-colors duration-300">
                     +91-9425092651
                   </a>
                 </motion.div>
 
-                {/* Email */}
-                <motion.div 
-                  variants={itemVariants}
-                  className="text-center"
-                >
+                <motion.div variants={itemVariants} className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#6B46C1] to-[#492974] rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Mail className="w-7 h-7 text-white" />
                   </div>
                   <h3 className="text-white font-semibold text-xl mb-2">Email</h3>
-                  <a 
-                    href="mailto:info@trspropertymall.com" 
-                    className="text-[#C6A256] text-lg hover:text-white transition-colors duration-300"
-                  >
+                  <a href="mailto:info@trspropertymall.com" className="text-[#C6A256] text-lg hover:text-white transition-colors duration-300">
                     info@trspropertymall.com
                   </a>
                 </motion.div>
 
-                {/* Follow */}
-                <motion.div 
-                  variants={itemVariants}
-                  className="text-center"
-                >
+                <motion.div variants={itemVariants} className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#6B46C1] to-[#492974] rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Users className="w-7 h-7 text-white" />
                   </div>
@@ -440,7 +389,6 @@ const ContactPage = () => {
               variants={containerVariants}
               className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
             >
-              {/* Corporate Office */}
               <motion.div
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
@@ -457,7 +405,6 @@ const ContactPage = () => {
                 </p>
               </motion.div>
 
-              {/* R-Lounge */}
               <motion.div
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
