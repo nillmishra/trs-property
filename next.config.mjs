@@ -12,7 +12,6 @@ const nextConfig = {
                 hostname: 'images.unsplash.com',
                 pathname: '/**',
             },
-            // ← ADD THIS ONE LINE BELOW
             {
                 protocol: 'https',
                 hostname: 'rx100realty.in',
@@ -21,6 +20,11 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'res.cloudinary.com',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'img.youtube.com',
                 pathname: '/**',
             }
         ],
