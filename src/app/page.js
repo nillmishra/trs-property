@@ -207,13 +207,16 @@ export default function Home() {
         <main className="flex-grow">
           <HeroSection />
           <FeaturedProjects />
-          <FounderSection />
-          <FounderAwardSection />
-          <AiRevolutionSection features={features} />
-          {/* <DeveloperBanner /> */}
+          {/* <FounderSection /> */}
+          
           <PatnerSection />
-          <ServicesToolsSection />
+          
+          <FounderAwardSection />
+          {/* <AiRevolutionSection features={features} /> */}
+          {/* <DeveloperBanner /> */}
           <Testimonials testimonials={testimonials} />
+          <ServicesToolsSection />
+          
           <BlogSection />
           {/* <FAQSection faqs={faqs} /> */}
           <NewsLetter />

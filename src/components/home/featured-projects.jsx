@@ -10,6 +10,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
+import WhatsappStrip from "../whatsapp-strip";
 
 // Static property data with Unsplash images
 const staticProperties = [
@@ -140,7 +141,7 @@ function FeaturedProjects() {
     };
 
     return (
-        <section className="py-20 md:py-28 bg-gradient-to-br from-[#0a0a0a] via-[#110f1f] to-[#0a0a0a] overflow-hidden relative">
+        <section className="pt-10 md:pt-20 bg-gradient-to-br from-[#0a0a0a] via-[#110f1f] to-[#0a0a0a] overflow-hidden relative">
             {/* Background decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-20 left-10 w-72 h-72 bg-[#9B59B6]/8 rounded-full blur-3xl"></div>
@@ -210,6 +211,10 @@ function FeaturedProjects() {
                 </motion.div>
 
             </div>
+            <div className="mt-10">
+                  <WhatsappStrip />
+            </div>
+            
         </section>
     );
 }

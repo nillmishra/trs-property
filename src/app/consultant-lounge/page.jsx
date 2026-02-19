@@ -19,13 +19,7 @@ import {
 } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import FeaturedProjects from "@/components/home/featured-projects";
 
 
 const ConsultantLoungePage = () => {
@@ -55,63 +49,6 @@ const ConsultantLoungePage = () => {
     e.preventDefault();
     console.log("Form submitted:", formData);
   };
-
-  const exclusiveDeals = [
-    {
-      id: 1,
-      title: "Luxury Apartment Complex",
-      location: "Vijay Nagar, Indore",
-      price: "8,50,00,000",
-      image:
-        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
-      badge: "Premium",
-    },
-    {
-      id: 2,
-      title: "Executive Residency",
-      location: "Palasia, Indore",
-      price: "12,00,00,000",
-      image:
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",
-      badge: "Exclusive",
-    },
-    {
-      id: 3,
-      title: "Modern Villa Complex",
-      location: "AB Road, Indore",
-      price: "65,00,000",
-      image:
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
-      badge: "Featured",
-    },
-    {
-      id: 4,
-      title: "Elite Township",
-      location: "Scheme 140, Indore",
-      price: "75,00,000",
-      image:
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
-      badge: "Hot Deal",
-    },
-    {
-      id: 5,
-      title: "Commercial Hub",
-      location: "MG Road, Indore",
-      price: "45,00,000",
-      image:
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
-      badge: "Investment",
-    },
-    {
-      id: 6,
-      title: "Luxury Villas",
-      location: "Ujjain Road, Indore",
-      price: "50,00,000",
-      image:
-        "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80",
-      badge: "Premium",
-    },
-  ];
 
   const networkBenefits = [
     {
@@ -302,12 +239,12 @@ const ConsultantLoungePage = () => {
 
                 {/* Video Section */}
                 <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] rounded-2xl overflow-hidden group border border-[#C6A256]/10">
-                  <Image
-                    src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
-                    alt="Consultant"
-                    width={700}
-                    height={350}
+                  <video
+                    src="/assets/video/trs.mp4"
                     className="w-full h-[250px] md:h-[320px] object-cover"
+                    muted
+                    loop
+                    playsInline
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300" />
 
@@ -601,125 +538,23 @@ const ConsultantLoungePage = () => {
           </div>
         </section>
 
-        {/* Exclusive Deals Section */}
-        <section className="relative py-20 md:py-28 mt-[-70px] mb-[-30px]">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              viewport={{ once: true }}
-              className="mb-12"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold text-white">
-                  Top Exclusive Deals For TRS Consultants
-                </h2>
-                <Link
-                  href="/property"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-900 rounded-full font-semibold text-sm hover:bg-gray-100 transition"
-                >
-                  View All <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
+      <FeaturedProjects />
 
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-4">
-                {exclusiveDeals.map((property, idx) => (
-                  <CarouselItem key={property.id} className="pl-4 basis-full md:basis-1/2 lg:basis-1/6">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: idx * 0.1 }}
-                      viewport={{ once: true }}
-                      className="group bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] rounded-2xl overflow-hidden border border-[#C6A256]/20 hover:border-[#C6A256] transition-all duration-300"
-                    >
-                      <div className="relative h-48 overflow-hidden">
-                        <Image
-                          src={property.image}
-                          alt={property.title}
-                          fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                        <span className="absolute top-3 right-3 px-3 py-1 bg-[#C6A256] text-gray-900 text-xs font-semibold rounded-full">
-                          {property.badge}
-                        </span>
-                      </div>
-
-                      <div className="p-6">
-                        <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">
-                          {property.title}
-                        </h3>
-                        <p className="text-gray-400 text-sm mb-4 line-clamp-1">
-                          📍 {property.location}
-                        </p>
-                        <p className="text-2xl font-bold text-[#C6A256] mb-4">
-                          ₹ {property.price}
-                        </p>
-                        <button className="w-full bg-gradient-to-r from-[#C6A256] to-[#D4B45F] text-gray-900 font-semibold py-2 rounded-lg hover:shadow-lg hover:shadow-[#C6A256]/50 transition-all duration-300">
-                          View Details
-                        </button>
-                      </div>
-                    </motion.div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-0 border-[#C6A256]/20 text-white hover:bg-[#C6A256]/10" />
-              <CarouselNext className="right-0 border-[#C6A256]/20 text-white hover:bg-[#C6A256]/10" />
-            </Carousel>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="relative py-16 md:py-20 bg-gradient-to-r from-[#C6A256]/5 via-transparent to-[#C6A256]/5">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              viewport={{ once: true }}
-              className="text-center max-w-2xl mx-auto"
-            >
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Ready to join TRS Consultant Lounge?
-              </h2>
-              <p className="text-gray-400 text-sm md:text-base mb-8">
-                Get exclusive access to premium properties, dedicated support,
-                and join a network of 500+ successful consultants
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#C6A256] to-[#D4B45F] text-[#0a0a0a] font-semibold rounded-xl text-sm hover:shadow-xl hover:shadow-[#C6A256]/30 transition-all duration-300">
-                  Request Access <ArrowRight className="w-4 h-4" />
-                </button>
-                <a
-                  href="https://wa.me/919425092651"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#25D366] text-white font-semibold rounded-xl text-sm hover:bg-[#1fa652] transition-all duration-300"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
-                  WhatsApp Us
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        {/* <WhatsappStrip /> */}
       </main>
 
       {/* Video Modal */}
       {showVideoModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          onClick={() => setShowVideoModal(false)}
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="relative w-full max-w-3xl mx-4 bg-black rounded-2xl overflow-hidden"
+            className="relative w-full max-w-4xl mx-4 bg-black rounded-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setShowVideoModal(false)}
@@ -729,16 +564,15 @@ const ConsultantLoungePage = () => {
             </button>
 
             <div className="aspect-video">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="TRS Consultant Lounge"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="rounded-2xl"
-              ></iframe>
+              <video
+                src="/assets/video/trs.mp4"
+                className="w-full h-full rounded-2xl"
+                controls
+                autoPlay
+                playsInline
+              >
+                Your browser does not support the video tag.
+              </video>
             </div>
           </motion.div>
         </div>

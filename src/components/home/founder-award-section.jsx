@@ -99,7 +99,7 @@ const FounderAwardSection = () => {
   }, [isVideoOpen])
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-[#0a0a0a] via-[#080808] to-[#0a0a0a] relative overflow-hidden">
+    <section className="md:pt-8 pt-5 bg-gradient-to-b from-[#0a0a0a] via-[#080808] to-[#0a0a0a] relative overflow-hidden">
       {/* Background decorative elements - subtle */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1a1a1a]/50 rounded-full blur-3xl"></div>
@@ -108,7 +108,11 @@ const FounderAwardSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Main Content Grid */}
+         <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
+               Awards & <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Recognition</span>
+           </h2>
         <div className="flex flex-col lg:flex-row gap-8 items-stretch">
+          
           
           {/* Video Section - Left Side */}
           <motion.div
@@ -128,9 +132,8 @@ const FounderAwardSection = () => {
                 muted
                 loop
                 playsInline
-                poster="/assets/images/bgimage.jpg"
               >
-                <source src="/assets/video/bg_new_video.mp4" type="video/mp4" />
+                <source src="/assets/video/trs.mp4" type="video/mp4" />
               </video>
               
               {/* Overlay */}
@@ -213,20 +216,6 @@ const FounderAwardSection = () => {
                   </motion.button>
                 </div>
                 
-                {/* Slide indicator dots */}
-                {/* <div className="flex gap-2">
-                  {awardImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => emblaApi?.scrollTo(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === (emblaApi?.selectedScrollSnap() || 0) 
-                          ? 'bg-[#C6A256] w-6' 
-                          : 'bg-white/30 hover:bg-white/50'
-                      }`}
-                    />
-                  ))}
-                </div> */}
               </div>
             </div>
           </motion.div>
@@ -267,16 +256,16 @@ const FounderAwardSection = () => {
                 </motion.button>
                 
                 {/* Video Player */}
-                <video
-                  ref={videoRef}
-                  className="w-full h-full object-cover bg-black"
-                  controls
-                  autoPlay
-                  playsInline
-                >
-                  <source src="/assets/video/bg_new_video.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+              <video
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                autoPlay        
+                muted
+                loop
+                playsInline
+                poster="/assets/images/awards/Pasted image.png"  
+              >
+                <source src="/assets/video/trs.mp4" type="video/mp4" />
+              </video>
               </div>
             </motion.div>
           </>

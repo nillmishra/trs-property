@@ -6,9 +6,11 @@ import Image from 'next/image'
 import { Award, Users, Globe, Target, Handshake, TrendingUp, Play, Instagram, Linkedin, Twitter, Facebook, X } from 'lucide-react'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import FounderAwardSection from '@/components/home/founder-award-section'
 
 const AboutPage = () => {
   const [selectedVideo, setSelectedVideo] = useState(null)
+  const [showFounderVideo, setShowFounderVideo] = useState(false)
 
   const { ref: heroRef, inView: heroInView } = useInView({
     triggerOnce: false,
@@ -114,7 +116,7 @@ const AboutPage = () => {
     <>
       <Header />
       <div className="min-h-screen bg-gradient-to-br from-[#0a0514] via-[#0f0821] to-[#1a0f2e] text-white overflow-hidden">
-        {/* Video Modal */}
+        {/* Video Modals */}
         <AnimatePresence>
           {selectedVideo && (
             <motion.div
@@ -158,14 +160,58 @@ const AboutPage = () => {
               </motion.div>
             </motion.div>
           )}
+
+          {showFounderVideo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              onClick={() => setShowFounderVideo(false)}
+            >
+              {/* Backdrop with blur */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0a0514]/90 via-[#1a0f2e]/85 to-[#0f0821]/90 backdrop-blur-md" />
+              
+              {/* Modal Content */}
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="relative w-full max-w-5xl bg-gradient-to-br from-[#1a0f2e] to-[#0f0821] rounded-2xl overflow-hidden shadow-2xl border border-purple-500/30"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button */}
+                <button
+                  onClick={() => setShowFounderVideo(false)}
+                  className="absolute top-4 right-4 z-10 w-10 h-10 bg-[#492974]/50 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-[#492974]/80 transition-colors"
+                >
+                  <X className="w-6 h-6 text-white" />
+                </button>
+
+                {/* Local Video */}
+                <div className="aspect-video">
+                  <video
+                    src="/assets/video/trs.mp4"
+                    className="w-full h-full rounded-2xl"
+                    controls
+                    autoPlay
+                    playsInline
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
         </AnimatePresence>
         {/* Hero Section with Mission & Vision */}
         <section ref={heroRef} className="relative py-20 md:py-32 overflow-hidden">
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f2e]/80 via-[#492974]/30 to-[#0a0514]/90 z-10" />
+            <div className="absolute inset-0 z-10" />
             <Image
-              src="/assets/images/property/property1.jpg"
+              src="https://images.pexels.com/photos/19157992/pexels-photo-19157992.jpeg"
               alt="Total Reality Solutions"
               fill
               className="object-cover opacity-40"
@@ -289,27 +335,31 @@ const AboutPage = () => {
               </h2>
             </motion.div>
 
-            <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-16 lg:mb-24">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={founderInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative group"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative aspect-video rounded-3xl overflow-hidden border border-purple-500/30">
-                  <Image
-                    src="/assets/images/testimonials/test1.jpg"
-                    alt="Founder"
-                    fill
-                    className="object-cover"
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-2xl lg:rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative aspect-video rounded-2xl lg:rounded-3xl overflow-hidden border border-purple-500/30 cursor-pointer"
+                  onClick={() => setShowFounderVideo(true)}
+                >
+                  <video
+                    src="/assets/video/trs.mp4"
+                    className="w-full h-full object-cover"
+                    muted
+                    loop
+                    playsInline
+                    autoPlay
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f2e]/70 to-transparent" />
-                  <button className="absolute inset-0 flex items-center justify-center group">
-                    <div className="w-20 h-20 bg-[#492974]/40 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-purple-400/30">
-                      <Play className="w-8 h-8 text-amber-300 ml-1" fill="currentColor" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 md:w-20 md:h-20 bg-[#492974]/40 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-purple-400/30">
+                      <Play className="w-6 h-6 md:w-8 md:h-8 text-amber-300 ml-1" fill="currentColor" />
                     </div>
-                  </button>
+                  </div>
                 </div>
               </motion.div>
 
@@ -317,61 +367,58 @@ const AboutPage = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={founderInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="space-y-6"
+                className="space-y-4 md:space-y-6"
               >
-                <div className="text-6xl text-purple-400 opacity-50">"</div>
-                <p className="text-xl md:text-2xl text-gray-300 leading-relaxed italic">
+                <p className="text-base md:text-xl lg:text-2xl text-gray-300 leading-relaxed italic">
                   TRS embodies Trust, the cornerstone of our business; Relationships, the bridge to lasting partnerships; and Success, the result of our unwavering commitment to Transparency, Responsibility, and Sustainability. Guided by Tradition, powered by Talent, and driven by a passion for exceptional Service, we build a future you can rely on.
                 </p>
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Rtn. Dr. Gajendra Narang</h3>
-                  <p className="text-purple-400 font-semibold mb-4">CHAIRMAN & MANAGING DIRECTOR</p>
-                  <div className="flex gap-4">
-                    <a href="#" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Rtn. Dr. Gajendra Narang</h3>
+                  <p className="text-sm md:text-base text-purple-400 font-semibold mb-4">CHAIRMAN & MANAGING DIRECTOR</p>
+                  <div className="flex gap-3 md:gap-4">
+                    <a href="https://www.instagram.com/gajendrasinghnarang/" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
                       <Instagram className="w-5 h-5" />
                     </a>
-                    <a href="#" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
+                    <a href="https://www.linkedin.com/in/dr-gajendra-singh-narang-93000631/" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
                       <Linkedin className="w-5 h-5" />
                     </a>
-                    <a href="#" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
+                    <a href="https://www.facebook.com/gajendra.narang/" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
                       <Facebook className="w-5 h-5" />
                     </a>
-                    <a href="#" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
-                      <Twitter className="w-5 h-5" />
-                    </a>
+                  
                   </div>
                 </div>
               </motion.div>
             </div>
 
             {/* Growth Leader Section */}
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={founderInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="space-y-6 order-2 lg:order-1"
+                className="space-y-4 md:space-y-6 order-2 lg:order-1"
               >
-                <h2 className="text-4xl md:text-5xl font-bold">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
                   Growth <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Leader</span>
                 </h2>
-                <div className="text-6xl text-purple-400 opacity-50">"</div>
-                <p className="text-lg md:text-xl text-gray-300 leading-relaxed italic">
+                <div className="text-4xl md:text-6xl text-purple-400 opacity-50">"</div>
+                <p className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed italic">
                   Not Just Selling Property. Redefining the Experience Around it. I see real estate as more than transactions. For me, it is a system—where branding, data, digital tools, and market psychology work together, built on transparency and long-term trust. My focus is to innovate, digitise, and simplify the entire property journey removing friction, confusion, and guesswork to deliver a seamless, end-to-end experience rooted in clarity, confidence, and credibility for buyers, investors, and developers.
                 </p>
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Sammartha Narang</h3>
-                  <p className="text-purple-400 font-semibold mb-4">CHIEF OF SALES & MARKETING</p>
-                  <div className="flex gap-4">
-                    <a href="#" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Sammartha Narang</h3>
+                  <p className="text-sm md:text-base text-purple-400 font-semibold mb-4">CHIEF OF SALES & MARKETING</p>
+                  <div className="flex gap-3 md:gap-4">
+                    <a href="https://www.linkedin.com/in/sammartha-narang-44446b134/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
                       <Linkedin className="w-5 h-5" />
                     </a>
-                    <a href="#" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
+                    {/* <a href="#" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
                       <Facebook className="w-5 h-5" />
                     </a>
                     <a href="#" className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center hover:bg-purple-500/40 transition-colors">
                       <Instagram className="w-5 h-5" />
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </motion.div>
@@ -382,13 +429,14 @@ const AboutPage = () => {
                 transition={{ duration: 0.8, delay: 0.8 }}
                 className="relative group order-1 lg:order-2"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-pink-500/30 to-purple-500/30 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-purple-500/30">
+                <div className="absolute inset-0 bg-gradient-to-br from-pink-500/30 to-purple-500/30 rounded-2xl lg:rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative h-[400px] md:h-[500px] lg:h-[550px] rounded-2xl lg:rounded-3xl overflow-hidden border border-purple-500/30">
                   <Image
-                    src="/assets/images/testimonials/test2.jpg"
+                    src="/assets/images/femal.jsx"
                     alt="Growth Leader"
                     fill
                     className="object-cover"
+                    style={{ objectPosition: 'center 20%' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f2e]/70 to-transparent" />
                 </div>
@@ -398,36 +446,11 @@ const AboutPage = () => {
         </section>
 
         {/* Awards & Recognition */}
-        <section className="py-20 md:py-28 relative overflow-hidden">
+        <section className="pt-12 md:p-20 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-black to-[#492974]/10" />
-          <div className="container mx-auto px-4 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              viewport={{ once: false }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Awards & <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Recognition</span>
-              </h2>
-            </motion.div>
+         
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: false }}
-              className="relative max-w-4xl mx-auto aspect-video rounded-3xl overflow-hidden border border-purple-500/30"
-            >
-              <Image
-                src="/assets/images/awards/award1.jpg"
-                alt="Awards"
-                fill
-                className="object-cover"
-              />
-            </motion.div>
-          </div>
+          <FounderAwardSection />
         </section>
 
         {/* Recent Podcasts & Video Highlights */}

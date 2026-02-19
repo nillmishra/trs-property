@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import WhatsappStrip from "@/components/whatsapp-strip";
 
 const BuilderLounge = () => {
   const benefits = [
@@ -153,16 +154,7 @@ const BuilderLounge = () => {
           </div>
         </section>
 
-        {/* ================= CTA ================= */}
-        <section className="py-12 bg-gradient-to-r from-[#C6A256]/10 to-transparent text-center">
-          <h2 className="text-2xl font-bold mb-4">
-            Ready to scale your projects with TRS?
-          </h2>
-
-          <button className="bg-[#C6A256] text-black px-6 py-3 text-sm font-semibold hover:bg-[#d4b45f] transition inline-flex items-center gap-2">
-            Get Started <ArrowRight size={16} />
-          </button>
-        </section>
+        <WhatsappStrip />
 
       </main>
 
