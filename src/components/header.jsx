@@ -50,7 +50,7 @@ function Header() {
         <div className="container mx-auto py-2 sm:py-3 flex items-center gap-3 sm:gap-5 justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-end flex-shrink-0">
-            <Image
+            {/* <Image
               src="/assets/logo/logo2.avif"
               alt="Logo"
               width={70}
@@ -63,6 +63,12 @@ function Header() {
               width={150}
               height={150}
               
+            /> */}
+            <Image
+            src="/assets/logo/TPM Logo.png"
+            alt="Logo"
+            width={250}
+            height={50}
             />
           </Link>
 
