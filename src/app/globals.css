@@ -408,6 +408,28 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Mobile responsive fixes */
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+  
+  /* Ensure containers don't overflow on mobile */
+  .container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Improve touch targets on mobile */
+  @media (max-width: 768px) {
+    button, a {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
 }
 

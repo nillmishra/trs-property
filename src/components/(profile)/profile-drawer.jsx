@@ -3,11 +3,7 @@ import { Dialog } from "@headlessui/react";
 import {
     User,
     LogOut,
-    FilePlus,
-    X,
-    Heart,
-    Home,
-    BringToFront,
+    X
 } from "lucide-react";
 import { useState, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,12 +15,12 @@ export default function ProfileDrawer({ onLogout, user }) {
     const [isOpen, setIsOpen] = useState(false);
     const previewImage = user?.image ? getImageUrl(user.image) : '/assets/images/profile.png';
     const menuItems = [
-        { name: "Profile", icon: User, url: '/profile' },
-        { name: "Post Property", icon: FilePlus, url: '/post-property' },
-        { name: "Post Buy Requirement", icon: FilePlus, url: '/post-buy-requirement' },
-        { name: "My Property", icon: Home, url: '/my-property' },
-        { name: "My Matches", icon: BringToFront, url: '/property-matches' },
-        { name: "Favourite", icon: Heart, url: '/property-favourite' },
+        { name: "Profile", url: '/profile' },
+        { name: "Post Property", url: '/post-property' },
+        { name: "Post Buy Requirement", url: '/post-buy-requirement' },
+        { name: "My Property", url: '/my-property' },
+        { name: "My Matches", url: '/property-matches' },
+        { name: "Favourite", url: '/property-favourite' },
     ];
 
     return (
@@ -84,7 +80,6 @@ export default function ProfileDrawer({ onLogout, user }) {
                                                 key={name}
                                                 className="flex items-center gap-3 text-white hover:text-yellow-400 cursor-pointer transition-colors"
                                             >
-                                                <Icon className="h-5 w-5" />
                                                 <span>{name}</span>
                                             </Link>
                                         ))}

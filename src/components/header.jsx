@@ -1,4 +1,3 @@
-// src/components/header.jsx
 "use client";
 
 import Image from "next/image";
@@ -12,15 +11,13 @@ import toast from "react-hot-toast";
 import ProfileDrawer from "./(profile)/profile-drawer";
 import { usePathname, useRouter } from "next/navigation";
 import HeaderDrawer from "./(profile)/header-drawer";
-import { Circle, HardHat, Home, User, Users2, Building2 } from "lucide-react";
-
 const links = [
-  { href: "/", label: "HOME", icon: Home },
-  { href: "/about", label: "ABOUT US", icon: Circle },
-  { href: "/property", label: "PROPERTIES", icon: Building2 },
-  { href: "/consultant-lounge", label: "CONSULTANT LOUNGE", icon: Users2 },
-  { href: "/builder-lounge", label: "BUILDER LOUNGE", icon: HardHat },
-  { href: "/contact", label: "CONTACT US", icon: User },
+  { href: "/", label: "HOME" },
+  { href: "/about", label: "ABOUT US" },
+  { href: "/property", label: "PROPERTIES" },
+  { href: "/consultant-lounge", label: "CONSULTANT LOUNGE" },
+  { href: "/builder-lounge", label: "BUILDER LOUNGE" },
+  { href: "/contact", label: "CONTACT US" },
 ];
 
 function Header() {
@@ -50,71 +47,72 @@ function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 w-full property-gradient backdrop-blur-sm">
-        <div className="container mx-auto py-3 flex items-center gap-5 justify-between">
+        <div className="container mx-auto py-2 sm:py-3 flex items-center gap-3 sm:gap-5 justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-end">
+          <Link href="/" className="flex items-end flex-shrink-0">
             <Image
               src="/assets/logo/logo2.avif"
               alt="Logo"
-              width={90}
-              height={100}
+              width={70}
+              height={80}
+             
             />
             <Image
               src="/assets/logo/logo1.avif"
               alt="Logo"
-              width={200}
-              height={200}
-              className="ml-[-10px]"
+              width={150}
+              height={150}
+              
             />
           </Link>
 
           {/* Desktop Nav */}
-<nav className="hidden md:flex items-center space-x-8">
-  {links.map(({ href, label }) => (
-    <Link
-      key={href}
-      href={href}
-      className={`relative text-sm font-bold transition-all duration-300 group
-        ${pathname === href
-          ? "text-amber-400"
-          : "text-white opacity-90 hover:opacity-100 hover:text-amber-300"
-        }`}
-    >
-      {label}
+          <nav className="hidden md:flex items-center space-x-8">
+            {links.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`relative text-sm font-bold transition-all duration-300 group
+                  ${pathname === href
+                    ? "text-amber-400"
+                    : "text-white opacity-90 hover:opacity-100 hover:text-amber-300"
+                  }`}
+              >
+                {label}
 
-      {/* Underline */}
-      <span
-        className={`absolute -bottom-1 left-0 h-[2px] bg-amber-400 transition-all duration-300
-          ${pathname === href
-            ? "w-full"                          // active → full underline
-            : "w-0 group-hover:w-full"          // hover → animate in
-          }`}
-      />
-    </Link>
-  ))}
+                {/* Underline */}
+                <span
+                  className={`absolute -bottom-1 left-0 h-[2px] bg-amber-400 transition-all duration-300
+                    ${pathname === href
+                      ? "w-full"                          // active → full underline
+                      : "w-0 group-hover:w-full"          // hover → animate in
+                    }`}
+                />
+              </Link>
+            ))}
 
-  {token ? (
-    <ProfileDrawer onLogout={handlerLogout} user={user} />
-  ) : (
-    <button
-      onClick={() => router.push("/post-property")}
-      className="golden-button group relative overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-gray-900 px-5 py-2 rounded-md text-sm font-semibold cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.5)] border border-amber-300/50"
-    >
-      <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-        Post Property Free
-      </span>
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-    </button>
-  )}
-</nav>
+            {token ? (
+              <ProfileDrawer onLogout={handlerLogout} user={user} />
+            ) : (
+              <button
+                onClick={() => router.push("/post-property")}
+                className="golden-button group relative overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-gray-900 px-3 sm:px-5 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.5)] border border-amber-300/50 whitespace-nowrap"
+              >
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+                  Post Property
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
+            )}
+          </nav>
           {/* Mobile */}
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-2 sm:gap-4 md:hidden">
             {token ? (
               <ProfileDrawer onLogout={handlerLogout} user={user} />
             ) : (
               <button
                 onClick={() => setOpen(true)}
-                className="golden-button group relative overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-gray-900 px-4 py-1.5 rounded-md text-sm font-semibold"
+                className="golden-button group relative overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-gray-900 px-3 sm:px-4 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold whitespace-nowrap"
               >
                 <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
                   LogIn

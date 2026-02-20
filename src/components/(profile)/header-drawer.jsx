@@ -2,9 +2,6 @@
 
 import { Dialog } from "@headlessui/react";
 import {
-    User,
-    ClipboardList,
-    FilePlus,
     X,
     Menu
 } from "lucide-react";
@@ -57,13 +54,12 @@ export default function HeaderDrawer({ menuOpen, setMenuOpen, links }) {
                                         <Image src="/assets/logo/logo2.avif" alt="Logo" width={100} height={100} />
                                     </Link>
                                     <ul className="space-y-5 mt-10">
-                                        {links?.map(({ label, icon: Icon, href }) => (
+                                        {links?.map(({ label, href }) => (
                                             <Link
                                                 href={href}
                                                 key={label}
                                                 className="flex items-center gap-3 text-white hover:text-yellow-400 cursor-pointer transition-colors"
                                             >
-                                                <Icon className="h-5 w-5" />
                                                 <span>{label}</span>
                                             </Link>
                                         ))}

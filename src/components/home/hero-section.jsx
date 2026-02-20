@@ -154,7 +154,7 @@ function HeroSection() {
     };
 
     return (
-        <section className="relative h-[88vh] overflow-hidden">
+        <section className="relative min-h-screen md:h-[80vh] overflow-hidden">
             {/* Video Background */}
             <div className="absolute inset-0 z-0">
                 <video
@@ -196,27 +196,27 @@ function HeroSection() {
                 ))}
             </div>
 
-            <div className="relative z-10 container mx-auto px-4 h-[90vh] flex flex-col justify-center items-center">
+            <div className="relative z-10 container mx-auto px-4 sm:px-6 min-h-screen md:h-[90vh] flex flex-col justify-center items-center py-18 md:py-0">
                 <motion.div
                     ref={ref}
                     initial="hidden"
                     animate={inView ? "visible" : "hidden"}
                     variants={staggerContainer}
-                    className="max-w-5xl text-white text-center"
+                    className="max-w-5xl text-white text-center w-full"
                 >
 
                     {/* Animated Title */}
                     <motion.div key={activeFilter} variants={fadeInUp}>
                         <AnimatedText 
                             text={getHeadingText()}
-                            className="hero-title text-3xl md:text-5xl lg:text-6xl font-semibold mb-4 leading-tight tracking-tight"
+                            className="hero-title text-3xl md:text-5xl lg:text-6xl font-semibold mb-4 md:mb-6 leading-tight tracking-tight md:px-2"
                         />
                     </motion.div>
 
                     {/* Subtitle */}
                     <motion.p 
                         variants={fadeInUp}
-                        className="md:text-xl font-semibold mb-10 max-w-2xl mx-auto text-white/80 leading-tight"
+                        className="text-sm sm:text-base md:text-xl font-medium md:font-semibold mb-8 md:mb-10 max-w-2xl mx-auto text-white/90 leading-relaxed px-4"
                     >
                         We provide a complete service for the sale, purchase or rental of real estate.
                         Get access to exclusive network & properties that suit your needs.
@@ -225,7 +225,7 @@ function HeroSection() {
                     {/* Stats Section */}
                     <motion.div 
                         variants={fadeInUp}
-                        className="flex flex-wrap items-center gap-6 md:gap-0 mt-4 justify-center mb-5"
+                        className="grid grid-cols-2 md:flex md:flex-wrap items-center gap-4 sm:gap-6 md:gap-0 mt-4 justify-center mb-6 md:mb-8 px-2"
                     >
                         {[
                             { target: 3000, label: "PROPERTIES" },
@@ -233,23 +233,23 @@ function HeroSection() {
                             { target: 800, label: "AGENTS" },
                             { target: 1000, label: "CLIENTS" },
                         ].map((stat, index, arr) => (
-                            <div key={stat.label} className="flex items-center">
+                            <div key={stat.label} className="flex items-center justify-center">
                                 <motion.div 
-                                    className="text-center group px-4 md:px-8"
+                                    className="text-center group px-3 sm:px-4 md:px-8"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                                     transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
                                     whileHover={{ scale: 1.05, y: -5 }}
                                 >
                                     <div className="relative">
-                                        <h2 className="text-2xl md:text-5xl flex justify-center font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                                        <h2 className="text-3xl sm:text-4xl md:text-5xl flex justify-center font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
                                             {inView && <AnimatedCounter target={stat.target} />}
                                         </h2>
                                         <motion.div 
                                             className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-[#9B59B6] to-[#171137] group-hover:w-full transition-all duration-300"
                                         />
                                     </div>
-                                    <p className="text-xs md:text-sm font-semibold mt-3 text-white/70 tracking-wider">{stat.label}</p>
+                                    <p className="text-xs sm:text-xs md:text-sm font-semibold mt-2 md:mt-3 text-white/80 tracking-wider">{stat.label}</p>
                                 </motion.div>
                                 {index < arr.length - 1 && (
                                     <div className="hidden md:block w-px h-12 bg-white/30"></div>
@@ -261,10 +261,10 @@ function HeroSection() {
                     {/* Search Section */}
                     <motion.div
                         variants={fadeInUp}
-                        className="w-full max-w-4xl mx-auto"
+                        className="w-full max-w-4xl mx-auto px-2"
                     >
                         <motion.h2 
-                            className="text-xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent"
+                            className="text-lg sm:text-xl md:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                             transition={{ delay: 0.8, duration: 0.5 }}
@@ -273,13 +273,13 @@ function HeroSection() {
                         </motion.h2>
 
                         <motion.div 
-                            className="bg-white/10 backdrop-blur-xl rounded-3xl p-6 md:p-8 shadow-2xl border border-white/10"
+                            className="bg-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border border-white/10"
                             initial={{ opacity: 0, y: 30 }}
                             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             transition={{ delay: 0.9, duration: 0.6 }}
                         >
                             {/* Filter Buttons */}
-                            <div className="flex flex-wrap gap-2 md:gap-3 mb-6 justify-center">
+                            <div className="flex flex-wrap gap-2 md:gap-3 mb-4 md:mb-6 justify-center">
                                 {filters.map((filter, index) => (
                                     <motion.button
                                         key={filter.id}
@@ -289,7 +289,7 @@ function HeroSection() {
                                         whileHover={{ scale: 1.05, y: -2 }}
                                         whileTap={{ scale: 0.95 }}
                                         onClick={() => setActiveFilter(filter.id)}
-                                        className={`relative px-5 md:px-6 py-2 md:py-2.5 rounded-full font-semibold text-xs md:text-sm transition-all duration-300 overflow-hidden ${
+                                        className={`relative px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 rounded-full font-semibold text-xs md:text-sm transition-all duration-300 overflow-hidden ${
                                             activeFilter === filter.id
                                                 ? "bg-white text-gray-900 shadow-lg shadow-white/25"
                                                 : "bg-white/10 text-white hover:bg-white/20 border border-white/20"
@@ -309,14 +309,14 @@ function HeroSection() {
                             </div>
 
                             {/* Search Bar */}
-                            <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-center">
+                            <div className="flex flex-col md:flex-row gap-2 sm:gap-3 md:gap-4 items-stretch md:items-center">
                                 <motion.div 
-                                    className="flex items-center gap-3 bg-white rounded-2xl px-5 py-3.5 w-full md:w-auto shadow-lg"
+                                    className="flex items-center gap-2 sm:gap-3 bg-white rounded-xl md:rounded-2xl px-4 sm:px-5 py-3 sm:py-3.5 w-full md:w-auto shadow-lg justify-center md:justify-start"
                                     whileHover={{ scale: 1.02, boxShadow: "0 10px 40px rgba(0,0,0,0.15)" }}
                                     transition={{ type: "spring", stiffness: 300 }}
                                 >
-                                    <MapPin className="w-5 h-5 text-[#171137]" />
-                                    <span className="font-semibold text-gray-800">{location}</span>
+                                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#171137] flex-shrink-0" />
+                                    <span className="font-semibold text-sm sm:text-base text-gray-800">{location}</span>
                                 </motion.div>
 
                                 <div className="flex-1 w-full">
@@ -330,7 +330,7 @@ function HeroSection() {
                                             placeholder="Search by project or builder name"
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full px-5 py-3.5 rounded-2xl border-2 border-transparent bg-white text-gray-800 focus:border-[#171137] focus:outline-none placeholder-gray-400 transition-all duration-300 shadow-lg"
+                                            className="w-full px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl md:rounded-2xl border-2 border-transparent bg-white text-sm sm:text-base text-gray-800 focus:border-[#171137] focus:outline-none placeholder-gray-400 placeholder:text-xs sm:placeholder:text-sm transition-all duration-300 shadow-lg"
                                         />
                                     </motion.div>
                                 </div>
@@ -338,9 +338,9 @@ function HeroSection() {
                                 <motion.button
                                     whileHover={{ scale: 1.05, boxShadow: "0 15px 40px rgba(23, 17, 55, 0.5)" }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="bg-gradient-to-r from-[#171137] to-[#2d1f5c] text-white px-8 py-3.5 rounded-2xl font-semibold flex items-center gap-2 transition-all duration-300 shadow-lg w-full md:w-auto justify-center"
+                                    className="bg-gradient-to-r from-[#171137] to-[#2d1f5c] text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl md:rounded-2xl font-semibold text-sm sm:text-base flex items-center gap-2 transition-all duration-300 shadow-lg w-full md:w-auto justify-center"
                                 >
-                                    <Search className="w-5 h-5" />
+                                    <Search className="w-4 h-4 sm:w-5 sm:h-5" />
                                     Search
                                 </motion.button>
                             </div>
@@ -350,7 +350,7 @@ function HeroSection() {
 
                 {/* Scroll indicator */}
                 <motion.div 
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                    className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.5, duration: 0.5 }}

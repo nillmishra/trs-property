@@ -79,13 +79,13 @@ const WhatsappStrip = ({ phoneNumber = "919713435452", message = "Hello Team TRS
               </button>
 
               {/* Close button */}
-              <button
+              {/* <button
                 onClick={() => setIsVisible(false)}
                 className="p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-110 active:scale-95"
                 aria-label="Close"
               >
                 <X className="w-4 h-4 text-white" />
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

@@ -252,7 +252,7 @@ function PropertySearchBar({ onSearch }) {
                   ref={inputRef}
                   type="text"
                   placeholder="Search by title, city, project name or builder name"
-                  className="w-full p-4 bg-gray-50 text-gray-900 placeholder-gray-500 rounded-2xl border border-gray-200 outline-none shadow-sm focus:border-amber-400 focus:bg-white transition-all duration-300"
+                  className="w-full md:p-4 p-2 bg-gray-50 text-gray-900 placeholder-gray-500 rounded-xl border border-gray-200 outline-none shadow-sm focus:border-amber-400 focus:bg-white transition-all duration-300"
                   value={searchQuery}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyPress}
@@ -275,7 +275,7 @@ function PropertySearchBar({ onSearch }) {
               {showSuggestions && citySuggestions.length > 0 && (
                 <div
                   ref={suggestionsRef}
-                  className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-200 max-h-64 overflow-y-auto z-50"
+                  className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200 max-h-64 overflow-y-auto z-50"
                 >
                   {citySuggestions.map((city, index) => {
                     const cityName =
@@ -291,7 +291,7 @@ function PropertySearchBar({ onSearch }) {
                       <button
                         key={index}
                         onClick={() => handleCitySelect(city)}
-                        className="group w-full px-4 py-3 text-left transition-colors flex items-center gap-3 border-b border-gray-100 last:border-b-0 relative overflow-hidden"
+                        className="group w-full md:px-4 md:py-3 text-left transition-colors flex items-center gap-3 border-b border-gray-100 last:border-b-0 relative overflow-hidden"
                       >
                         {/* Gradient Hover Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -318,9 +318,9 @@ function PropertySearchBar({ onSearch }) {
             <div className="w-auto flex-shrink-0">
               <button
                 onClick={handleSearch}
-                className="group relative overflow-hidden w-14 h-14 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer hover:shadow-[0_0_20px_rgba(251,191,36,0.5)] hover:scale-105"
+                className="group relative overflow-hidden md:w-14 md:h-14 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer hover:shadow-[0_0_20px_rgba(251,191,36,0.5)] hover:scale-105"
               >
-                <Search className="h-6 w-6 relative z-10 text-gray-900 transition-colors duration-300 group-hover:text-white" />
+                <Search className="md:h-6 md:w-6 relative z-10 text-gray-900 transition-colors duration-300 group-hover:text-white" />
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
               </button>
             </div>
@@ -329,7 +329,7 @@ function PropertySearchBar({ onSearch }) {
             <div className="w-auto flex-shrink-0">
               <button
                 onClick={handleClear}
-                className={`group relative overflow-hidden w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer border-2 ${
+                className={`group relative overflow-hidden md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-all duration-300 cursor-pointer border-2 ${
                   hasActiveFilters
                     ? "border-red-400 bg-red-50"
                     : "border-gray-200 bg-gray-50"
@@ -339,7 +339,7 @@ function PropertySearchBar({ onSearch }) {
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                 <RotateCcw
-                  className={`h-5 w-5 relative z-10 transition-all duration-300 group-hover:rotate-[-45deg] group-hover:text-gray-900 ${
+                  className={`md:h-5 md:w-5 relative z-10 transition-all duration-300 group-hover:rotate-[-45deg] group-hover:text-gray-900 ${
                     hasActiveFilters ? "text-red-500" : "text-gray-600"
                   }`}
                 />
