@@ -46,8 +46,8 @@ function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full property-gradient backdrop-blur-sm">
-        <div className="container mx-auto py-2 sm:py-3 flex items-center gap-3 sm:gap-5 justify-between">
+      <header className="sticky top-0 z-50 w-full property-gradient backdrop-blur-sm shadow-lg">
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-2.5 md:py-3 flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5 justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-end flex-shrink-0">
             {/* <Image
@@ -64,21 +64,24 @@ function Header() {
               height={150}
               
             /> */}
-            <Image
-            src="/assets/logo/TPM Logo.png"
-            alt="Logo"
-            width={250}
-            height={50}
-            />
+            <div className="relative w-32 h-8 xs:w-36 xs:h-9 sm:w-44 sm:h-10 md:w-52 md:h-11 lg:w-60 lg:h-12">
+              <Image
+                src="/assets/logo/TPM Logo.png"
+                alt="Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-3 lg:space-x-6 xl:space-x-8">
             {links.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className={`relative text-sm font-bold transition-all duration-300 group
+                className={`relative text-xs lg:text-sm font-bold transition-all duration-300 group whitespace-nowrap
                   ${pathname === href
                     ? "text-amber-400"
                     : "text-white opacity-90 hover:opacity-100 hover:text-amber-300"
@@ -102,7 +105,7 @@ function Header() {
             ) : (
               <button
                 onClick={() => router.push("/post-property")}
-                className="golden-button group relative overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-gray-900 px-3 sm:px-5 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.5)] border border-amber-300/50 whitespace-nowrap"
+                className="golden-button group relative overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-gray-900 px-4 md:px-5 lg:px-6 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-semibold cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.5)] border border-amber-300/50 whitespace-nowrap"
               >
                 <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
                   Post Property
@@ -112,13 +115,13 @@ function Header() {
             )}
           </nav>
           {/* Mobile */}
-          <div className="flex items-center gap-2 sm:gap-4 md:hidden">
+          <div className="flex items-center gap-2 sm:gap-3 md:hidden">
             {token ? (
               <ProfileDrawer onLogout={handlerLogout} user={user} />
             ) : (
               <button
                 onClick={() => setOpen(true)}
-                className="golden-button group relative overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-gray-900 px-3 sm:px-4 py-1 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold whitespace-nowrap"
+                className="golden-button group relative overflow-hidden bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-gray-900 px-3 sm:px-4 py-1.5 sm:py-2 rounded text-xs sm:text-sm font-semibold whitespace-nowrap active:scale-95 transition-transform"
               >
                 <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
                   LogIn

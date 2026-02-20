@@ -75,27 +75,27 @@ const ServicesToolsSection = () => {
     }
 
     return (
-        <section className="py-16 md:py-24 bg-gradient-to-b from-[#0a0a0a] via-[#0d0a14] to-[#0a0a0a] overflow-hidden relative">
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-[#0a0a0a] via-[#0d0a14] to-[#0a0a0a] overflow-hidden relative">
             {/* Background decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#1a1030]/20 to-transparent"></div>
-                <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#6B46C1]/5 rounded-full blur-3xl"></div>
-                <div className="absolute top-1/2 left-0 w-80 h-80 bg-[#492974]/5 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 right-0 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-[#6B46C1]/5 rounded-full blur-3xl"></div>
+                <div className="absolute top-1/2 left-0 w-60 h-60 sm:w-72 sm:h-72 lg:w-80 lg:h-80 bg-[#492974]/5 rounded-full blur-3xl"></div>
             </div>
 
-            <div className="container mx-auto px-4 relative z-10">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                     viewport={{ once: false, amount: 0.3 }}
-                    className="text-center mb-12"
+                    className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16"
                 >
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-wide">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-wide px-4">
                         CURATED TOOLS & SERVICES
                     </h2>
-                    <div className="w-24 h-1 bg-gradient-to-r from-[#6B46C1] to-[#C6A256] mx-auto mt-4"></div>
+                    <div className="w-16 sm:w-20 md:w-24 h-1 bg-gradient-to-r from-[#6B46C1] to-[#C6A256] mx-auto mt-3 sm:mt-4"></div>
                 </motion.div>
 
                 {/* Services Grid - 3 columns, 2 rows */}
@@ -104,7 +104,7 @@ const ServicesToolsSection = () => {
                     whileInView="visible"
                     viewport={{ once: false, amount: 0.1 }}
                     variants={containerVariants}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-7xl mx-auto"
                 >
                     {servicesData.map((service) => (
                         <motion.div
@@ -113,9 +113,9 @@ const ServicesToolsSection = () => {
                             className="group"
                         >
                             <Link href={service.href}>
-                                <div className="flex items-stretch bg-[#12121a] rounded-2xl overflow-hidden border border-white/5 hover:border-[#6B46C1]/30 transition-all duration-300 h-full cursor-pointer min-h-[140px]">
+                                <div className="flex items-stretch bg-[#12121a] rounded-xl sm:rounded-2xl overflow-hidden border border-white/5 hover:border-[#6B46C1]/30 transition-all duration-300 h-full cursor-pointer min-h-[120px] sm:min-h-[140px] md:min-h-[160px]">
                                     {/* Image Section - Left */}
-                                    <div className="relative w-40 md:w-48 flex-shrink-0 overflow-hidden">
+                                    <div className="relative w-28 xs:w-32 sm:w-36 md:w-40 lg:w-48 flex-shrink-0 overflow-hidden">
                                         <Image
                                             src={service.image}
                                             alt={service.title}
@@ -126,13 +126,13 @@ const ServicesToolsSection = () => {
                                     </div>
                                     
                                     {/* Content Section - Right */}
-                                    <div className="flex-1 p-5 flex flex-col justify-center">
-                                        <div className="flex items-start justify-between gap-4">
+                                    <div className="flex-1 p-3 sm:p-4 md:p-5 flex flex-col justify-center">
+                                        <div className="flex items-start justify-between gap-2 sm:gap-3 md:gap-4">
                                             <div className="flex-1">
-                                                <h3 className="text-white font-semibold text-lg md:text-xl leading-tight mb-2 group-hover:text-[#C6A256] transition-colors duration-300">
+                                                <h3 className="text-white font-semibold text-base sm:text-lg md:text-xl leading-tight mb-1.5 sm:mb-2 group-hover:text-[#C6A256] transition-colors duration-300">
                                                     {service.title}
                                                 </h3>
-                                                <p className="text-white/50 text-sm md:text-base leading-relaxed line-clamp-2">
+                                                <p className="text-white/50 text-xs sm:text-sm md:text-base leading-relaxed line-clamp-2">
                                                     {service.description}
                                                 </p>
                                             </div>
@@ -141,9 +141,9 @@ const ServicesToolsSection = () => {
                                             <motion.div
                                                 whileHover={{ scale: 1.1 }}
                                                 whileTap={{ scale: 0.95 }}
-                                                className="w-10 h-10 rounded-lg bg-[#1a1a24] border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#6B46C1] group-hover:border-[#6B46C1] transition-all duration-300"
+                                                className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg bg-[#1a1a24] border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#6B46C1] group-hover:border-[#6B46C1] transition-all duration-300"
                                             >
-                                                <ChevronRight className="w-5 h-5 text-white" />
+                                                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                                             </motion.div>
                                         </div>
                                     </div>
