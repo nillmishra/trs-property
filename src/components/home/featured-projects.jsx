@@ -23,6 +23,7 @@ const staticProperties = [
         bathrooms: 2,
         area: 1200,
         images: ["https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/KALPATARU.png"
     },
     {
         id: 2,
@@ -33,6 +34,7 @@ const staticProperties = [
         bathrooms: 3,
         area: 1800,
         images: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/SKYE EARTH.png"
     },
     {
         id: 3,
@@ -43,6 +45,7 @@ const staticProperties = [
         bathrooms: 2,
         area: 1200,
         images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/HDFC LIFE.png"
     },
     {
         id: 4,
@@ -53,46 +56,51 @@ const staticProperties = [
         bathrooms: 3,
         area: 1500,
         images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/GODREJ PROPERTIES.png"
     },
     {
         id: 5,
-        title: "NRK Luxe",
+        title: "DAMAC Luxe",
         city: "Nipania, Indore",
         expected_price: 7000000,
         bedrooms: 4,
         bathrooms: 4,
         area: 2000,
         images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/DAMAC.png"
     },
     {
         id: 6,
-        title: "Phoenix Heights",
+        title: "OBERAI Heights",
         city: "Vijay Nagar, Indore",
         expected_price: 8500000,
         bedrooms: 4,
         bathrooms: 3,
         area: 2200,
         images: ["https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/OBERAI REALITY.jpeg"
     },
     {
         id: 7,
-        title: "Royal Orchid",
+        title: "Raymond Orchid",
         city: "AB Road, Indore",
         expected_price: 6500000,
         bedrooms: 3,
         bathrooms: 2,
         area: 1650,
         images: ["https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/RAYMOND REALITY.png"
     },
     {
         id: 8,
-        title: "The Millennium",
+        title: "DLF",
         city: "Palasia, Indore",
         expected_price: 12000000,
         bedrooms: 5,
         bathrooms: 4,
         area: 3000,
         images: ["https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/DLF.png"
     },
     {
         id: 9,
@@ -103,16 +111,19 @@ const staticProperties = [
         bathrooms: 2,
         area: 1400,
         images: ["https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/L T REALTY.jpeg"
     },
     {
         id: 10,
-        title: "Sapphire Residency",
+        title: "Omaxe Residency",
         city: "MR 10, Indore",
         expected_price: 9500000,
         bedrooms: 4,
         bathrooms: 3,
         area: 2500,
         images: ["https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80"],
+        overlay:"/assets/images/builderLogo/OMAXE.png"
+
     },
 ];
 
