@@ -9,7 +9,7 @@ export default function PropertyMatches() {
     return (
         <>
             <Header />
-            <SliderBanner />
+            {/* <SliderBanner /> */}
             <PropertyMatchesCard />
             <IPhoneBanner />
             <WhatsapBanner />

@@ -10,7 +10,7 @@ export default function PropertyFavourite() {
 
         <>
             <Header />
-            <SliderBanner />
+            {/* <SliderBanner /> */}
             <PropertyFavouriteCard />
             <IPhoneBanner />
             <WhatsapBanner />

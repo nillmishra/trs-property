@@ -25,7 +25,7 @@ export default function Property() {
 
         <>
             <Header />
-            <SliderBanner />
+            {/* <SliderBanner /> */}
             <PropertyCard cards={cards} />
             <IPhoneBanner />
             <CitiesCard cities={cities} />

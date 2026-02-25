@@ -10,7 +10,7 @@ export default function MyProperty() {
 
         <>
             <Header />
-            <SliderBanner  />
+            {/* <SliderBanner  /> */}
             <MyPropertyCard />
             <IPhoneBanner />
             <WhatsapBanner />

@@ -213,7 +213,7 @@ const PropertyCard = ({ cards }) => {
     };
 
     return (
-        <div className="property-search-gradient min-h-screen text-white">
+        <div className="property-search-gradient min-h-screen text-white md:pt-15">
             {/* Search Bar Section */}
             <PropertySearchBar onSearch={handleSearchAndFilter} />
             

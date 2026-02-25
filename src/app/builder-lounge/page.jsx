@@ -51,7 +51,7 @@ const BuilderLounge = () => {
         <section className="relative overflow-hidden">
 
           {/* Full-width background image */}
-          <div className="absolute inset-0 w-full h-full">
+          {/* <div className="absolute inset-0 w-full h-full">
             <Image
               src="/assets/images/detail/banner.jpg"
               alt="builder background"
@@ -60,7 +60,7 @@ const BuilderLounge = () => {
               className="object-top object-center"
             />
             <div className="absolute inset-0 bg-black/60" />
-          </div>
+          </div> */}
 
           {/* Content — text box overlays from left, vertically centred */}
           <div className="relative z-10 container mx-auto px-4 py-32 flex items-center min-h-[520px]">
